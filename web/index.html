@@ -40,6 +40,24 @@
   <script src="flutter.js" defer></script>
 </head>
 <body>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+      import { initializeApp } from "firebase/app";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyDoh1RJLBtblr-gLQG5ATHHoDATyX3KU04",
+        authDomain: "itec-b5aeb.firebaseapp.com",
+        projectId: "itec-b5aeb",
+        storageBucket: "itec-b5aeb.appspot.com",
+        messagingSenderId: "180380880828",
+        appId: "1:180380880828:web:da8244e550ee14ffbfe5b9"
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
