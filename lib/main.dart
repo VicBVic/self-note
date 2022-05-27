@@ -7,15 +7,15 @@ void main() {
 }
 
 const colorScheme = ColorScheme(
-  primary: Color.fromARGB(255, 5, 5, 5),
-  secondary: Color.fromARGB(255, 25, 25, 25),
+  primary: Color.fromARGB(255, 222, 194, 109),
+  secondary: Color.fromARGB(255, 155, 155, 155),
   onPrimary: Colors.white70,
   onSecondary: Colors.white70,
   background: Colors.black,
   onBackground: Colors.white,
   error: Colors.red,
   onError: Colors.white,
-  surface: Colors.black,
+  surface: Color.fromARGB(255, 0, 0, 0),
   onSurface: Colors.white70,
   brightness: Brightness.dark,
 );
@@ -29,12 +29,24 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          //primarySwatch: Colors.grey,
+        //primarySwatch: Colors.grey,
+        navigationRailTheme: NavigationRailThemeData(
+          selectedIconTheme: IconThemeData(
+            color: Colors.blue,
           ),
+          selectedLabelTextStyle: TextStyle(
+            color: Color.fromARGB(255, 0, 195, 255),
+            fontSize: 13,
+            letterSpacing: 0.8,
+            decoration: TextDecoration.underline,
+            decorationThickness: 2.0,
+          ),
+        ),
+      ),
       darkTheme: ThemeData(
         //brightness: Brightness.dark,
         /* dark theme settings */
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Color.fromARGB(255, 25, 25, 25),
         colorScheme: colorScheme,
       ),
       themeMode: ThemeMode.dark,
