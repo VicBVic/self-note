@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itec20222/screens/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_good.dart';
 
 class DesktopHomeScreen extends StatefulWidget {
@@ -15,7 +16,11 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Paper Friend'),
+        title: Text(
+          'Paper Friend',
+          style:
+              Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20.0),
+        ),
         actions: [
           PopupMenuButton<Text>(
             itemBuilder: (context) {
@@ -30,7 +35,11 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
           ),
         ],
       ),
-      body: PaperGood(),
+      body: ListView(
+        children: [
+          PaperBad(),
+        ],
+      ),
     );
   }
 }
