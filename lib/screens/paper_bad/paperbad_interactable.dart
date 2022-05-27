@@ -21,7 +21,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
             fit: FlexFit.tight,
             flex: 1,
             child: Image.asset(
-              "textures/dummy-no-royalty.jpg",
+              "textures/my-papyrus.png",
               fit: BoxFit.fill,
             ),
           ),

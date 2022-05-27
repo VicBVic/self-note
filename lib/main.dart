@@ -7,9 +7,9 @@ void main() {
 }
 
 const colorScheme = ColorScheme(
-  primary: Color.fromARGB(255, 222, 194, 109),
+  primary: Color.fromARGB(255, 255, 174, 0),
   secondary: Color.fromARGB(255, 155, 155, 155),
-  onPrimary: Colors.white70,
+  onPrimary: Colors.black87,
   onSecondary: Colors.white70,
   background: Colors.black,
   onBackground: Colors.white,
@@ -28,8 +28,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        //primarySwatch: Colors.grey,
+      debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData(
+        //brightness: Brightness.dark,
+        /* dark theme settings */
+        scaffoldBackgroundColor: Color.fromARGB(255, 5, 5, 20),
+        colorScheme: colorScheme,
         navigationRailTheme: NavigationRailThemeData(
           selectedIconTheme: IconThemeData(
             color: Colors.blue,
@@ -42,12 +46,12 @@ class MyApp extends StatelessWidget {
             decorationThickness: 2.0,
           ),
         ),
-      ),
-      darkTheme: ThemeData(
-        //brightness: Brightness.dark,
-        /* dark theme settings */
-        scaffoldBackgroundColor: Color.fromARGB(255, 25, 25, 25),
-        colorScheme: colorScheme,
+        fontFamily: "TiroDevanagariHindi",
+        textTheme: TextTheme(
+          headline2: TextStyle(
+            color: Colors.green,
+          ),
+        ),
       ),
       themeMode: ThemeMode.dark,
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
