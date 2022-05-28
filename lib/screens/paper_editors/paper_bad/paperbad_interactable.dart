@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:itec20222/consts.dart';
+import 'package:itec20222/screens/paper_editors/paper.dart';
 import 'package:painter/painter.dart';
 
 class PaperBadInteractable extends StatefulWidget {
@@ -13,6 +14,7 @@ class PaperBadInteractable extends StatefulWidget {
 
 class _PaperBadInteractableState extends State<PaperBadInteractable> {
   int _selectedIndex = 0;
+  bool burning = false;
 
   PainterController _controller = _newController();
 
@@ -34,11 +36,13 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
             fit: FlexFit.tight,
             flex: 1,
             child: Stack(
+              fit: StackFit.expand,
               children: [
-                Center(
-                  child: Image.asset(
-                    'textures/dummy-no-royalty.jpg',
-                    fit: BoxFit.fill,
+                Container(
+                  child: Paper(
+                    anitmationDuration: Duration(seconds: 10),
+                    color: Colors.black,
+                    pointCount: 30,
                   ),
                 ),
                 Painter(_controller),

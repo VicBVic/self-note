@@ -4,7 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:itec20222/screens/paper_bad/paperbad_interactable.dart';
+import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
 import 'package:itec20222/widgets/footer.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
