@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itec20222/screens/desktop_homescreen.dart';
 import 'package:itec20222/screens/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
 import 'package:itec20222/login.dart';
@@ -31,7 +32,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      initialRoute: '/paperbad',
+      routes: {
+        '/paperbad': (context) => MyHomePage(
+              bad: true,
+              title: 'Bad thoughts paper',
+            ),
+        '/papergood': (context) => MyHomePage(
+              bad: false,
+              title: 'Good thoughts paper',
+            ),
+        '/login': (context) => SigninPage(),
+      },
+      title: 'SelfNote',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(
         //brightness: Brightness.dark,
@@ -46,7 +59,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.dark,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
