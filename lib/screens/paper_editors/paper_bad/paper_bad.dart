@@ -9,6 +9,7 @@ import 'package:itec20222/consts.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
 import 'package:itec20222/widgets/footer.dart';
+import 'package:itec20222/widgets/paragraph-provider.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
 class PaperBad extends StatefulWidget {
@@ -82,7 +83,7 @@ class _PaperBadState extends State<PaperBad> {
     loadDesc();
     Future.delayed(Duration(milliseconds: 300), () {
       editorOp = 1;
-    });
+    }).then((value) => print(value));
   }
 
   void loadDesc() async {
@@ -107,36 +108,11 @@ class _PaperBadState extends State<PaperBad> {
         //print(serialized);
         for (var paragraph in serialized) {
           var argb = paragraph['Color'];
-          desc.add(WavyContainer(
-            height: paragraph['Height'],
-            width: double.infinity,
-            waveProcent: 1.0 +
-                (widget.paragraphWaveHeight ??
-                    defHeight / (paragraph['Height'])),
-            waveHeight: widget.paragraphWaveHeight ?? defHeight,
-            waveLength: widget.paragraphWaveLength ?? defLen,
-            waveSpeed: widget.paragraphWaveSpeed ?? defSpeed,
-            color: Color.fromARGB(argb[0], argb[1], argb[2], argb[3]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(64,
-                      (widget.paragraphWaveHeight ?? defHeight) + 16, 0, 64),
-                  child: Text(
-                    paragraph['Title'],
-                    style: h1,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 0, 32),
-                  child: Text(
-                    paragraph['Content'],
-                    style: b1,
-                  ),
-                ),
-              ],
-            ),
+          desc.add(ParagraphProvider(
+            data: paragraph,
+            waveHeight: widget.paragraphWaveHeight,
+            waveLength: widget.paragraphWaveLength,
+            waveSpeed: widget.paragraphWaveSpeed,
           ));
         }
       });
