@@ -11,35 +11,36 @@ import 'package:painter/painter.dart';
 final user = FirebaseAuth.instance.currentUser;
 
 class PaperGoodInteractable extends StatefulWidget {
-  TextEditingController thing1 = TextEditingController();
-  TextEditingController thing2 = TextEditingController();
-  TextEditingController thing3 = TextEditingController();
+  List<TextEditingController> thing = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController()
+  ];
 
   final double paperHeight;
-  final double padding;
+  late double padding;
   int happiness = 5;
   PaperGoodInteractable({
     Key? key,
     this.paperHeight = 250,
-    this.padding = 300,
+    required this.padding,
   }) : super(key: key);
 
-  void save()
-  {
-    String date = new DateTime.now().toString().substring(0,10);
+  void save() {
+    String date = DateTime.now().toString().substring(0, 10);
 
-    if(user!=null)
-    {
-      FirebaseFirestore.instance.collection(user!.uid.toString()).doc(date).set
-      (
-        {
-          'thing1':thing1.text,
-          'thing2':thing2.text,
-          'thing3':thing3.text,
-          'happiness':happiness
-        }
-      );
-      thing1.text=thing2.text=thing3.text="";
+    if (user != null) {
+      FirebaseFirestore.instance
+          .collection(user!.uid.toString())
+          .doc(date)
+          .set({
+        'thing1': thing[1].text,
+        'thing2': thing[2].text,
+        'thing3': thing[3].text,
+        'happiness': happiness
+      });
+      thing[1].text = thing[2].text = thing[3].text = "";
     }
   }
 
@@ -53,14 +54,13 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
 
   @override
   Widget build(BuildContext context) {
-    var b1 = Theme.of(context)
-        .textTheme
-        .headline3!
-        .copyWith(color: Colors.black, fontWeight: FontWeight.w800);
+    var b1 = Theme.of(context).textTheme.headline3!.copyWith(
+        color: Colors.black, fontWeight: FontWeight.w800, fontSize: 24);
     var b2 =
         Theme.of(context).textTheme.headline6!.copyWith(color: Colors.black);
 
     InputDecoration dec = InputDecoration(
+      contentPadding: null,
       prefixIcon: Icon(Icons.circle),
       prefixIconColor: Colors.green,
       border: OutlineInputBorder(borderSide: BorderSide.none),
@@ -72,14 +72,9 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          Container(
-            child: Paper(
-              anitmationDuration: Duration(seconds: 10),
-              color: Colors.black,
-              pointCount: 30,
-              burning: false,
-              paperHeight: widget.paperHeight,
-            ),
+          Image.asset(
+            'textures/my-papyrus.png',
+            fit: BoxFit.fill,
           ),
           Form(
             key: formKey,
@@ -87,23 +82,26 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextFormField(
-                  controller: widget.thing1,
+                  controller: widget.thing[1],
                   style: b1,
                   decoration: dec,
                 ),
                 TextFormField(
-                  controller: widget.thing2,
+                  controller: widget.thing[2],
                   style: b1,
                   decoration: dec,
                 ),
                 TextFormField(
-                  controller: widget.thing3,
+                  controller: widget.thing[3],
                   style: b1,
                   decoration: dec,
                 ),
-                Text(
-                  'On a scale from 0-10, how happy did you truly feel today?',
-                  style: b2,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'On a scale from 0-10, how happy did you truly feel today?',
+                    style: b2,
+                  ),
                 ),
                 Slider(
                   onChanged: (double newVal) {

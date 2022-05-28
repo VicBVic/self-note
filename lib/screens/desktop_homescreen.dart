@@ -10,7 +10,8 @@ import 'package:itec20222/widgets/wavy_container.dart';
 final user = FirebaseAuth.instance.currentUser;
 
 class DesktopHomeScreen extends StatefulWidget {
-  DesktopHomeScreen({Key? key}) : super(key: key);
+  String title;
+  DesktopHomeScreen({required this.title, Key? key}) : super(key: key);
 
   @override
   State<DesktopHomeScreen> createState() => _DesktopHomeScreenState();
@@ -18,7 +19,7 @@ class DesktopHomeScreen extends StatefulWidget {
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   bool userIsLoggedIn = user != null;
-  bool isBad = false;
+  bool isBad = true;
   StreamController streamController = StreamController();
 
   @override
@@ -26,7 +27,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Selfnote',
+          widget.title,
           style:
               Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
         ),

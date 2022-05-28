@@ -34,7 +34,8 @@ class _PaperBadState extends State<PaperBad> {
 
   @override
   Widget build(BuildContext context) {
-    Stream stream = controller.stream;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,6 +44,7 @@ class _PaperBadState extends State<PaperBad> {
               duration: Duration(seconds: 2),
               opacity: editorOp,
               child: PaperBadInteractable(
+                forMobile: (screenHeight > screenWidth),
                 burning: burning,
               ),
             ),

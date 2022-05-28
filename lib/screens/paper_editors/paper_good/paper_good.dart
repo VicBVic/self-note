@@ -25,11 +25,6 @@ class _PaperGoodState extends State<PaperGood> {
   int _selectedIndex = 0;
   List<Widget> desc = [];
 
-  PaperGoodInteractable PG = new PaperGoodInteractable
-  (
-    paperHeight: 400,
-  );
-
   @override
   Widget build(BuildContext context) {
     TextStyle h1 = Theme.of(context).textTheme.headline2!;
@@ -37,6 +32,11 @@ class _PaperGoodState extends State<PaperGood> {
     TextStyle b1 = Theme.of(context).textTheme.bodyLarge!;
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.width;
+
+    PaperGoodInteractable PG = new PaperGoodInteractable(
+      paperHeight: 400,
+      padding: (100),
+    );
 
     return Container(
       color: Colors.white,
@@ -62,8 +62,8 @@ class _PaperGoodState extends State<PaperGood> {
               ),
               PG,
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 300.0, vertical: 20.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: (5 * screenWidth / 18), vertical: 20.0),
                 child: ElevatedButton(
                   onPressed: PG.save,
                   child: Padding(

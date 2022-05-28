@@ -13,6 +13,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return DesktopHomeScreen(); //aici o sa fie un if daca e desktop sau mobile
+    return DesktopHomeScreen(
+      title: widget.title,
+    ); //aici o sa fie un if daca e desktop sau mobile
   }
 }
