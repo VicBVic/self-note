@@ -6,8 +6,7 @@ import 'package:itec20222/screens/paper_editors/paper_good.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
 class DesktopHomeScreen extends StatefulWidget {
-  bool bad;
-  DesktopHomeScreen({required this.bad, Key? key}) : super(key: key);
+  DesktopHomeScreen({Key? key}) : super(key: key);
 
   @override
   State<DesktopHomeScreen> createState() => _DesktopHomeScreenState();
@@ -15,6 +14,7 @@ class DesktopHomeScreen extends StatefulWidget {
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   bool userIsLoggedIn = false; //TODO: verifica robert
+  bool isBad = true;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
       ),
       body: ListView(
         children: [
-          widget.bad ? PaperBad() : PaperGood(),
+          isBad ? PaperBad() : PaperGood(),
         ],
       ),
     );
