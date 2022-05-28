@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:itec20222/auth/signup.dart';
 import 'package:itec20222/screens/desktop_homescreen.dart';
 import 'package:itec20222/screens/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
-import 'package:itec20222/login.dart';
+import 'package:itec20222/auth/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         '/papers': (context) => MyHomePage(
               title: 'Bad thoughts paper',
             ),
-        '/login': (context) => SigninPage(),
+        '/signin': (context) => SigninPage(),
+        '/signup': (context) => SignupPage(),
       },
       title: 'SelfNote',
       debugShowCheckedModeBanner: false,
