@@ -1,16 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:itec20222/screens/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_good.dart';
 
 class DesktopHomeScreen extends StatefulWidget {
-  const DesktopHomeScreen({Key? key}) : super(key: key);
+  bool bad;
+  DesktopHomeScreen({required this.bad, Key? key}) : super(key: key);
 
   @override
   State<DesktopHomeScreen> createState() => _DesktopHomeScreenState();
 }
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
-  int _selectedIndex = 0;
+  bool userIsLoggedIn = false; //TODO: verifica robert
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +22,24 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         title: Text(
           'Paper Friend',
           style:
-              Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20.0),
+              Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
         ),
         actions: [
-          PopupMenuButton<Text>(
+          PopupMenuButton(
             itemBuilder: (context) {
+              if (!userIsLoggedIn) {
+                return [
+                  PopupMenuItem(
+                    child: Text('Log in'),
+                    onTap: () => Navigator.pushNamed(context, '/login'),
+                  ),
+                ];
+              }
               return [
                 PopupMenuItem(
-                  child: Text(
-                    'da',
-                  ),
-                ),
+                  child: Text('Log out'),
+                  //TODO: metoda de signout
+                )
               ];
             },
           ),
@@ -37,7 +47,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
       ),
       body: ListView(
         children: [
-          PaperBad(),
+          widget.bad ? PaperBad() : PaperGood(),
         ],
       ),
     );

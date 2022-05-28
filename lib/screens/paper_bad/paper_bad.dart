@@ -12,12 +12,18 @@ class PaperBad extends StatefulWidget {
   State<PaperBad> createState() => _PaperBadState();
 }
 
+// Enum PaperActionStates = {
+//   int a=0;
+// };
+
 class _PaperBadState extends State<PaperBad> {
   String desc = "";
 
+  void burnPaper() {}
+
   @override
   Widget build(BuildContext context) {
-    TextStyle h1 = Theme.of(context).textTheme.headline2;
+    TextStyle h1 = Theme.of(context).textTheme.headline2!;
     TextStyle h2 = Theme.of(context).textTheme.headline2!;
     TextStyle b1 = Theme.of(context).textTheme.bodyLarge!;
     return Column(
@@ -30,7 +36,9 @@ class _PaperBadState extends State<PaperBad> {
           padding:
               const EdgeInsets.symmetric(horizontal: 300.0, vertical: 20.0),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              burnPaper();
+            },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
