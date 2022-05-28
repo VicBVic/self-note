@@ -7,7 +7,9 @@ import 'package:itec20222/classes/color_picker_button.dart';
 import 'package:painter/painter.dart';
 
 class PaperBadInteractable extends StatefulWidget {
-  const PaperBadInteractable({Key? key}) : super(key: key);
+  final bool burning;
+  const PaperBadInteractable({Key? key, this.burning = false})
+      : super(key: key);
 
   @override
   State<PaperBadInteractable> createState() => _PaperBadInteractableState();
@@ -15,7 +17,6 @@ class PaperBadInteractable extends StatefulWidget {
 
 class _PaperBadInteractableState extends State<PaperBadInteractable> {
   int _selectedIndex = 0;
-  bool burning = false;
 
   PainterController _controller = _newController();
 
@@ -44,6 +45,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                     anitmationDuration: Duration(seconds: 10),
                     color: Colors.black,
                     pointCount: 30,
+                    burning: widget.burning,
                   ),
                 ),
                 Painter(_controller),
@@ -84,20 +86,6 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                         ),
                         label: Text(
                           'Draw',
-                        ),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.favorite_border),
-                        label: Text(
-                          'Add hearts',
-                        ),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(
-                          Icons.star_border,
-                        ),
-                        label: Text(
-                          'Add stars',
                         ),
                       ),
                     ],

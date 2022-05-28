@@ -5,7 +5,6 @@ import 'package:itec20222/consts.dart';
 import 'package:painter/painter.dart';
 
 class Paper extends StatefulWidget {
-  List<double> points = [];
   final int pointCount;
   final Color color;
   final Duration? anitmationDuration;
@@ -25,32 +24,37 @@ class Paper extends StatefulWidget {
 class _PaperState extends State<Paper> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation _animation;
+  List<double> points = [];
 
   @override
   void initState() {
+    print(widget.burning);
     super.initState();
     // TODO: implement initState
     _controller =
         AnimationController(vsync: this, duration: widget.anitmationDuration);
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
-    if (widget.burning) _controller.forward();
-
     for (int i = 0; i < widget.pointCount; i++) {
-      widget.points.add(0.0);
+      points.add(0.0);
     }
     _controller.addListener(() {
       setState(() {
-        for (int i = 0; i < widget.points.length; i++) {
-          widget.points[i] =
-              widget.points[i] + Random().nextDouble() * 100 * _animation.value;
+        for (int i = 0; i < points.length; i++) {
+          points[i] =
+              points[i] + Random().nextDouble() * 100 * _animation.value;
         }
       });
+      //yprint(points);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.burning == true)
+      _controller.forward();
+    else
+      _controller.animateTo(0.001);
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -65,7 +69,7 @@ class _PaperState extends State<Paper> with SingleTickerProviderStateMixin {
           width: double.infinity,
           height: double.infinity,
           child: CustomPaint(
-            painter: PaperBurner(color: widget.color, pts: widget.points),
+            painter: PaperBurner(color: widget.color, pts: points),
           ),
         ),
       ],

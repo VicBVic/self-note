@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -9,12 +10,12 @@ import 'package:itec20222/widgets/footer.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
 class PaperBad extends StatefulWidget {
-  const PaperBad(
-      {Key? key,
-      this.paragraphWaveHeight,
-      this.paragraphWaveLength,
-      this.paragraphWaveSpeed})
-      : super(key: key);
+  const PaperBad({
+    Key? key,
+    this.paragraphWaveHeight,
+    this.paragraphWaveLength,
+    this.paragraphWaveSpeed,
+  }) : super(key: key);
   final double? paragraphWaveHeight;
   final double? paragraphWaveLength;
   final double? paragraphWaveSpeed;
@@ -24,6 +25,8 @@ class PaperBad extends StatefulWidget {
 }
 
 class _PaperBadState extends State<PaperBad> {
+  double editorOp = 0.0;
+  bool burning = false;
   List<Widget> desc = [];
 
   @override
@@ -31,12 +34,22 @@ class _PaperBadState extends State<PaperBad> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-            const PaperBadInteractable(),
+            AnimatedOpacity(
+              duration: Duration(seconds: 2),
+              opacity: editorOp,
+              child: PaperBadInteractable(
+                burning: burning,
+              ),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 300.0, vertical: 20.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    burning = true;
+                  });
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -56,7 +69,11 @@ class _PaperBadState extends State<PaperBad> {
 
   @override
   void initState() {
+    //editorOp = 0.0;
     loadDesc();
+    Future.delayed(Duration(milliseconds: 300), () {
+      editorOp = 1;
+    });
   }
 
   void loadDesc() async {
