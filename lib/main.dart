@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itec20222/auth/signup.dart';
+import 'package:itec20222/screens/desktop_homescreen.dart';
 import 'package:itec20222/screens/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
 import 'package:itec20222/auth/signin.dart';
@@ -32,25 +33,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      initialRoute: '/paperbad',
+      routes: {
+        '/paperbad': (context) => MyHomePage(
+              bad: true,
+              title: 'Bad thoughts paper',
+            ),
+        '/papergood': (context) => MyHomePage(
+              bad: false,
+              title: 'Good thoughts paper',
+            ),
+        '/signin': (context) => SigninPage(),
+        '/signup': (context) => SignupPage(),
+      },
+      title: 'SelfNote',
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(
         //brightness: Brightness.dark,
         /* dark theme settings */
         scaffoldBackgroundColor: Color.fromARGB(255, 5, 5, 20),
         colorScheme: colorScheme,
-        navigationRailTheme: NavigationRailThemeData(
-          selectedIconTheme: IconThemeData(
-            color: Colors.blue,
-          ),
-          selectedLabelTextStyle: TextStyle(
-            color: Color.fromARGB(255, 0, 195, 255),
-            fontSize: 13,
-            letterSpacing: 0.8,
-            decoration: TextDecoration.underline,
-            decorationThickness: 2.0,
-          ),
-        ),
         fontFamily: "TiroDevanagariHindi",
         textTheme: TextTheme(
           headline2: TextStyle(
@@ -59,7 +61,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.dark,
-      home: SignupPage()//const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
