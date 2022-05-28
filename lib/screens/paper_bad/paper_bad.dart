@@ -5,6 +5,8 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:itec20222/screens/paper_bad/paperbad_interactable.dart';
 import 'package:itec20222/widgets/footer.dart';
 
+import '../../widgets/intermediate_texts.dart';
+
 class PaperBad extends StatefulWidget {
   const PaperBad({Key? key}) : super(key: key);
 
@@ -18,8 +20,13 @@ class PaperBad extends StatefulWidget {
 
 class _PaperBadState extends State<PaperBad> {
   String desc = "";
+  bool paperHasBurned = false;
 
-  void burnPaper() {}
+  void burnPaper() async {
+    paperHasBurned = true;
+  }
+
+  void showIntermediateTexts() {}
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +38,16 @@ class _PaperBadState extends State<PaperBad> {
       //scrollDirection: Axis.vertical,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const PaperBadInteractable(),
+        PaperBadInteractable(),
         Padding(
           padding:
               const EdgeInsets.symmetric(horizontal: 300.0, vertical: 20.0),
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               burnPaper();
+              await Future.delayed(Duration(seconds: 4));
+              showIntermediateTexts();
+              await Future.delayed(Duration(seconds: 8));
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

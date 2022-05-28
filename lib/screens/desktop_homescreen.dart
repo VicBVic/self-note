@@ -47,7 +47,13 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
       ),
       body: ListView(
         children: [
-          isBad ? PaperBad() : PaperGood(),
+          AnimatedCrossFade(
+            duration: const Duration(seconds: 3),
+            firstChild: PaperBad(),
+            secondChild: PaperGood(),
+            crossFadeState:
+                isBad ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          ),
         ],
       ),
     );
