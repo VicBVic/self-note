@@ -8,7 +8,9 @@ import 'package:painter/painter.dart';
 
 class PaperBadInteractable extends StatefulWidget {
   final bool burning;
-  const PaperBadInteractable({Key? key, this.burning = false})
+  final double? paperHeight;
+  const PaperBadInteractable(
+      {Key? key, this.burning = false, this.paperHeight = 750})
       : super(key: key);
 
   @override
@@ -31,7 +33,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(40),
-      height: paperHeight,
+      height: widget.paperHeight,
       child: Row(
         children: [
           Flexible(
