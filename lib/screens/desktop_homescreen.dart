@@ -39,9 +39,15 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               if (!userIsLoggedIn) {
                 return [
                   PopupMenuItem(
-                    child: Text('Log in'),
-                    onTap: () => Navigator.pushNamed(context, '/login'),
-                  ),
+                      child: Text('Log in'),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/signin');
+                      }),
+                  PopupMenuItem(
+                      child: Text('Register'),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/signup');
+                      }),
                 ];
               }
               return [

@@ -53,7 +53,7 @@ class _PaperBadState extends State<PaperBad> {
                 onPressed: () {
                   setState(() {
                     burning = true;
-                    sleep(Duration(seconds: 4));
+                    //sleep(Duration(seconds: 4));
                     isBad = false;
                   });
                 },
