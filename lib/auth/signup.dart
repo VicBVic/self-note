@@ -65,7 +65,7 @@ class _SignupPageState extends State<SignupPage> {
                 ],
               ));
     } else {
-      //mergem mai departe
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
     }
   }
 

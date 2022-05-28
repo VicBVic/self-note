@@ -4,52 +4,160 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class SigninPage extends StatefulWidget {
-  const SigninPage({Key? key}) : super(key: key);
+  SigninPage({Key? key}) : super(key: key);
 
   @override
   State<SigninPage> createState() => _SigninPageState();
 }
 
 class _SigninPageState extends State<SigninPage> {
-  String text = "login";
-  void login() async {
+
+  TextEditingController emailcontroller = new TextEditingController();
+  TextEditingController passwordcontroller = new TextEditingController();
+
+  void signin() async
+  {
+    String email = emailcontroller.text;
+    String pass = passwordcontroller.text;
+    String error = "";
+
     try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: "r.acatrienei2005@gmail.com",
-        password: "dcnjhbd321esd",
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: pass
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        setState(() {
-          text = 'The password provided is too weak.';
-        });
-      } else if (e.code == 'email-already-in-use') {
-        setState(() {
-          text = 'The account already exists for that email.';
-        });
+      if (e.code == 'user-not-found') {
+        error='No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        error='Wrong password provided for that user.';
       }
-    } catch (e) {
-      setState(() {
-        text = e.toString();
-      });
+    }
+
+    if(error!="")
+    {
+      showDialog
+      (
+        context: context, 
+        builder: (ontext)=>AlertDialog
+        (
+          title: Text
+          (
+            "Error"
+          ),
+          content: SingleChildScrollView
+          (
+            child: ListBody
+            (
+              children:
+              [
+                Text(error),
+                Text("Please try again!"),
+              ],
+            ),
+          ),
+          actions:
+          [
+            TextButton
+            (
+              child: Text
+              (
+                "Ok"
+              ),
+              onPressed:() 
+              {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        )
+      );
+    }
+    else
+    {
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          ElevatedButton(
-            onPressed: login,
-            child: Text(text),
+    return Scaffold
+    (
+      body: Center
+      (
+        child: Padding
+        (
+          padding: EdgeInsets.only(top: 100),
+          child: SizedBox
+          (
+            width: 350,
+            child: Column
+            (
+              children:
+              [
+                Text
+                (
+                  "Sign in",
+                  style: TextStyle
+                  (
+                    fontSize: 24
+                  ),
+                ),
+                Padding
+                (
+                  padding: EdgeInsets.only
+                  (
+                    top: 25,
+                    bottom: 25
+                  ),
+                  child: TextFormField
+                  (
+                    controller: emailcontroller,
+                    decoration: InputDecoration
+                    (
+                      icon: Icon(Icons.email_outlined),
+                      labelText: "Email"
+                    ),
+                  ),
+                ),
+                Padding
+                (
+                  padding: EdgeInsets.only
+                  (
+                    top: 25,
+                    bottom: 25
+                  ),
+                  child: TextFormField
+                  (
+                    controller: passwordcontroller,
+                    obscureText: true,
+                    decoration: InputDecoration
+                    (
+                      icon: Icon(Icons.key),
+                      labelText: "Password",
+                    ),
+                  ),
+                ),
+                Padding
+                (
+                  padding: EdgeInsets.only
+                  (
+                    top: 25,
+                    bottom: 25
+                  ),
+                  child: ElevatedButton
+                  (
+                    child: Text
+                    (
+                      "Sign in"
+                    ),
+                    onPressed: signin,
+                  ),
+                )
+              ],
+            ),
           ),
-          ElevatedButton(
-            onPressed: login,
-            child: Text("Sign in with google"),
-          ),
-        ],
+        )
       ),
     );
   }
