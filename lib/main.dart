@@ -35,13 +35,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/paperbad',
       routes: {
-        '/paperbad': (context) => MyHomePage(
-              bad: true,
+        '/papers': (context) => MyHomePage(
               title: 'Bad thoughts paper',
-            ),
-        '/papergood': (context) => MyHomePage(
-              bad: false,
-              title: 'Good thoughts paper',
             ),
         '/signin': (context) => SigninPage(),
         '/signup': (context) => SignupPage(),
