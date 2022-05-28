@@ -26,6 +26,26 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: Text('Sign up'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/signin');
+              },
+              child: Text('Sign in'),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text(
           widget.title,
@@ -63,7 +83,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         children: [
           AnimatedCrossFade(
             duration: const Duration(seconds: 3),
-            firstChild: GoodMemos(),
+            firstChild: PaperBad(),
             secondChild: PaperGood(),
             crossFadeState:
                 isBad ? CrossFadeState.showFirst : CrossFadeState.showSecond,

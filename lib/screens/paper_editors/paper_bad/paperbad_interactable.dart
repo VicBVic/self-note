@@ -162,8 +162,8 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
           fontWeight: FontWeight.bold,
         ),
         keyboardType: TextInputType.multiline,
-        minLines: 50,
-        maxLines: 50,
+        minLines: 25,
+        maxLines: 25,
       ),
     );
 
