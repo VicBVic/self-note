@@ -1,1 +1,1 @@
-const double paperHeight = 550.0;
+const double paperHeight = 700.0;
