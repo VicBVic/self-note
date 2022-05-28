@@ -73,7 +73,10 @@ class _SigninPageState extends State<SigninPage> {
         )
       );
     }
-    final user = FirebaseAuth.instance.currentUser;
+    else
+    {
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    }
   }
 
   @override
