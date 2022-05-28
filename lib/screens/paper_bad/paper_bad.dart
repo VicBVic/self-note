@@ -17,7 +17,7 @@ class _PaperBadState extends State<PaperBad> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle h1 = Theme.of(context).textTheme.headline2;
+    TextStyle h1 = Theme.of(context).textTheme.headline2!;
     TextStyle h2 = Theme.of(context).textTheme.headline2!;
     TextStyle b1 = Theme.of(context).textTheme.bodyLarge!;
     return Column(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:itec20222/auth/signup.dart';
 import 'package:itec20222/screens/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
-import 'package:itec20222/login.dart';
+import 'package:itec20222/auth/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.dark,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SignupPage()//const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
