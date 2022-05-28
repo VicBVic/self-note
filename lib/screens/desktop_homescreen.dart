@@ -41,12 +41,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               if (!userIsLoggedIn) {
                 return [
                   PopupMenuItem(
-<<<<<<< HEAD
-                    child: Text('Sign in'),
-                    onTap: () => Navigator.pushNamed(context, '/signin'),
-                  ),
-=======
-                      child: Text('Log in'),
+                      child: Text('Sign in'),
                       onTap: () {
                         Navigator.pushNamed(context, '/signin');
                       }),
@@ -55,7 +50,6 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                       onTap: () {
                         Navigator.pushNamed(context, '/signup');
                       }),
->>>>>>> cb50ca9633c35cc15f61bb7db6fdbeeca61ec552
                 ];
               }
               return [
