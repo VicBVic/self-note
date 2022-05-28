@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:itec20222/auth/signup.dart';
 import 'package:itec20222/screens/desktop_homescreen.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
-import 'package:itec20222/login.dart';
+import 'package:itec20222/auth/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -15,9 +16,9 @@ const colorScheme = ColorScheme(
   primary: Colors.amber,
   secondary: Color.fromARGB(255, 155, 155, 155),
   onPrimary: Colors.black87,
-  onSecondary: Colors.white70,
+  onSecondary: Colors.black,
   background: Colors.black,
-  onBackground: Colors.white,
+  onBackground: Colors.black,
   error: Colors.red,
   onError: Colors.white,
   surface: Color.fromARGB(255, 14, 13, 15),
@@ -32,12 +33,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/paperbad',
+      initialRoute: '/',
       routes: {
-        '/papers': (context) => MyHomePage(
-              title: 'Bad thoughts paper',
-            ),
-        '/login': (context) => SigninPage(),
+        '/': (context) => DesktopHomeScreen(title: 'SelfNote'),
+        '/signin': (context) => SigninPage(),
+        '/signup': (context) => SignupPage(),
       },
       title: 'SelfNote',
       debugShowCheckedModeBanner: false,

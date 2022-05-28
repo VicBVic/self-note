@@ -9,12 +9,14 @@ class Paper extends StatefulWidget {
   final Color color;
   final Duration? anitmationDuration;
   final bool burning;
+  final double paperHeight;
   Paper(
       {Key? key,
       this.pointCount = 30,
       this.color = Colors.white,
       this.anitmationDuration,
-      this.burning = true})
+      this.burning = true,
+      this.paperHeight = 750})
       : super(key: key);
 
   @override
@@ -58,13 +60,6 @@ class _PaperState extends State<Paper> with SingleTickerProviderStateMixin {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Container(
-          height: paperHeight,
-          child: Image.asset(
-            'textures/my-papyrus.png',
-            fit: BoxFit.cover,
-          ),
-        ),
         Container(
           width: double.infinity,
           height: double.infinity,
