@@ -61,13 +61,6 @@ class _PaperState extends State<Paper> with SingleTickerProviderStateMixin {
       fit: StackFit.expand,
       children: [
         Container(
-          height: widget.paperHeight,
-          child: Image.asset(
-            'textures/my-papyrus.png',
-            fit: BoxFit.cover,
-          ),
-        ),
-        Container(
           width: double.infinity,
           height: double.infinity,
           child: CustomPaint(
