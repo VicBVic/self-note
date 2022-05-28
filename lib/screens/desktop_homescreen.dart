@@ -19,7 +19,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         title: Text(
           'Paper Friend',
           style:
-              Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20.0),
+              Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
         ),
         actions: [
           PopupMenuButton<Text>(

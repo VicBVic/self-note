@@ -20,9 +20,16 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
           Flexible(
             fit: FlexFit.tight,
             flex: 1,
-            child: Image.asset(
-              "textures/my-papyrus.png",
-              fit: BoxFit.fill,
+            child: Stack(
+              children: [
+                Image.asset(
+                  "textures/my-papyrus.png",
+                  fit: BoxFit.fill,
+                ),
+                // CustomPaint(
+                //   painter: MyCustomPainter(),
+                // ),
+              ],
             ),
           ),
           VerticalDivider(),

@@ -34,18 +34,6 @@ class MyApp extends StatelessWidget {
         /* dark theme settings */
         scaffoldBackgroundColor: Color.fromARGB(255, 5, 5, 20),
         colorScheme: colorScheme,
-        navigationRailTheme: NavigationRailThemeData(
-          selectedIconTheme: IconThemeData(
-            color: Colors.blue,
-          ),
-          selectedLabelTextStyle: TextStyle(
-            color: Color.fromARGB(255, 0, 195, 255),
-            fontSize: 13,
-            letterSpacing: 0.8,
-            decoration: TextDecoration.underline,
-            decorationThickness: 2.0,
-          ),
-        ),
         fontFamily: "TiroDevanagariHindi",
         textTheme: TextTheme(
           headline2: TextStyle(
