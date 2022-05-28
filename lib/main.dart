@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => MyHomePage(title: 'SelfNote'),
+        '/': (context) => DesktopHomeScreen(title: 'SelfNote'),
         '/signin': (context) => SigninPage(),
         '/signup': (context) => SignupPage(),
       },
