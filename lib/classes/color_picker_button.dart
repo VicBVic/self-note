@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:painter/painter.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class ColorPickerButton extends StatefulWidget {
   final PainterController _controller;
@@ -14,12 +15,20 @@ class ColorPickerButton extends StatefulWidget {
 class _ColorPickerButtonState extends State<ColorPickerButton> {
   @override
   Widget build(BuildContext context) {
-    return new IconButton(
-        icon: new Icon(_iconData, color: _color),
-        tooltip: widget._background
-            ? 'Change background color'
-            : 'Change draw color',
-        onPressed: _pickColor);
+    return Stack(
+      children: [
+        CircleAvatar(
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        IconButton(
+          icon: Icon(_iconData, color: _color),
+          tooltip: widget._background
+              ? 'Change background color'
+              : 'Change draw color',
+          onPressed: _pickColor,
+        ),
+      ],
+    );
   }
 
   void _pickColor() {
@@ -32,13 +41,14 @@ class _ColorPickerButtonState extends State<ColorPickerButton> {
                   appBar: AppBar(
                     title: const Text('Pick color'),
                   ),
-                  body: Container(
-                      // alignment: Alignment.center,
-                      // child: ColorPicker(
-                      //   pickerColor: pickerColor,
-                      //   onColorChanged: (Color c) => pickerColor = c,
-                      // )
-                      ));
+                  body: Center(
+                    child: Container(
+                        alignment: Alignment.center,
+                        child: ColorPicker(
+                          pickerColor: pickerColor,
+                          onColorChanged: (Color c) => pickerColor = c,
+                        )),
+                  ));
             }))
         .then((_) {
       setState(() {

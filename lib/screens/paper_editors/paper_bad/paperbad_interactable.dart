@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:itec20222/consts.dart';
 import 'package:itec20222/screens/paper_editors/paper.dart';
+import 'package:itec20222/classes/color_picker_button.dart';
 import 'package:painter/painter.dart';
 
 class PaperBadInteractable extends StatefulWidget {
@@ -102,7 +103,9 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                     ],
                   ),
                 ),
-                Divider(),
+                Divider(
+                  color: Colors.grey[700],
+                ),
                 IconButton(
                     icon: new Icon(
                       Icons.undo,
@@ -113,15 +116,16 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                         showModalBottomSheet(
                             context: context,
                             builder: (BuildContext context) =>
-                                new Text('Nothing to undo'));
+                                Text('Nothing to undo'));
                       } else {
                         _controller.undo();
                       }
                     }),
                 IconButton(
-                    icon: new Icon(Icons.delete),
+                    icon: Icon(Icons.delete),
                     tooltip: 'Clear',
                     onPressed: _controller.clear),
+                ColorPickerButton(_controller, false),
               ],
             ),
           ),
