@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
-import 'package:itec20222/screens/paper_editors/paper_good.dart';
+import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
 final user = FirebaseAuth.instance.currentUser;
@@ -23,7 +23,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Paper Friend',
+          'Selfnote',
           style:
               Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
         ),

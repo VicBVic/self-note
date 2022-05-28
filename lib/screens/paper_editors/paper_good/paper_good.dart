@@ -1,16 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
-import 'package:itec20222/widgets/footer.dart';
+import 'package:flutter/services.dart';
+import 'package:itec20222/screens/paper_editors/paper_good/papergood_interactable.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
-class PaperBad extends StatefulWidget {
-  const PaperBad({
+class PaperGood extends StatefulWidget {
+  const PaperGood({
     Key? key,
     this.paragraphWaveHeight,
     this.paragraphWaveLength,
@@ -21,59 +17,72 @@ class PaperBad extends StatefulWidget {
   final double? paragraphWaveSpeed;
 
   @override
-  State<PaperBad> createState() => _PaperBadState();
+  State<PaperGood> createState() => _PaperGoodState();
 }
 
-class _PaperBadState extends State<PaperBad> {
-  double editorOp = 0.0;
-  bool burning = false;
+class _PaperGoodState extends State<PaperGood> {
+  int _selectedIndex = 0;
   List<Widget> desc = [];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-            AnimatedOpacity(
-              duration: Duration(seconds: 2),
-              opacity: editorOp,
-              child: PaperBadInteractable(
-                burning: burning,
+    TextStyle h1 = Theme.of(context).textTheme.headline2!;
+    TextStyle h2 = Theme.of(context).textTheme.headline2!;
+    TextStyle b1 = Theme.of(context).textTheme.bodyLarge!;
+
+    return Container(
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(64, 16, 0, 32),
+                child: Text(
+                  'Not all is lightless still.',
+                  style: h1.copyWith(
+                      //decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
               ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 300.0, vertical: 20.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    burning = true;
-                  });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Burn',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline4!
-                        .copyWith(color: Colors.black),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 0, 32),
+                child: Text(
+                    'Try and write down three things that made you happy troughout the day. Search in your memory thouroughly.',
+                    style: b1.copyWith(
+                        fontSize: 22.0, height: 1, color: Colors.black)),
+              ),
+              PaperGoodInteractable(
+                paperHeight: 400,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 300.0, vertical: 20.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {});
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Save',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .copyWith(color: Colors.black),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ] +
-          desc,
+            ] +
+            desc,
+      ),
     );
   }
 
-  @override
   void initState() {
     //editorOp = 0.0;
     loadDesc();
-    Future.delayed(Duration(milliseconds: 300), () {
-      editorOp = 1;
-    });
   }
 
   void loadDesc() async {
@@ -102,8 +111,8 @@ class _PaperBadState extends State<PaperBad> {
             height: paragraph['Height'],
             width: double.infinity,
             waveProcent: 1.0 +
-                (widget.paragraphWaveHeight ??
-                    defHeight / (paragraph['Height'])),
+                (((widget.paragraphWaveHeight ?? defHeight) + 8) /
+                    (paragraph['Height'])),
             waveHeight: widget.paragraphWaveHeight ?? defHeight,
             waveLength: widget.paragraphWaveLength ?? defLen,
             waveSpeed: widget.paragraphWaveSpeed ?? defSpeed,
