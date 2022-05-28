@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:itec20222/consts.dart';
+import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/screens/paper_editors/paper.dart';
 import 'package:itec20222/classes/color_picker_button.dart';
 import 'package:painter/painter.dart';
@@ -24,21 +25,13 @@ class PaperGoodInteractable extends StatefulWidget {
     this.padding = 300,
   }) : super(key: key);
 
-  void save()
+  void save() async
   {
     String date = new DateTime.now().toString().substring(0,10);
 
     if(user!=null)
     {
-      FirebaseFirestore.instance.collection(user!.uid.toString()).doc(date).set
-      (
-        {
-          'thing1':thing1.text,
-          'thing2':thing2.text,
-          'thing3':thing3.text,
-          'happiness':happiness
-        }
-      );
+      Robertstore().Add_entry_good_paper(user!.uid.toString(), date, thing1.text, thing2.text, thing3.text, happiness);
       thing1.text=thing2.text=thing3.text="";
     }
   }
