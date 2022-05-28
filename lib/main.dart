@@ -15,7 +15,7 @@ const colorScheme = ColorScheme(
   onBackground: Colors.white,
   error: Colors.red,
   onError: Colors.white,
-  surface: Color.fromARGB(255, 0, 0, 0),
+  surface: Color.fromARGB(255, 14, 13, 15),
   onSurface: Colors.white70,
   brightness: Brightness.dark,
 );
@@ -32,25 +32,13 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         //brightness: Brightness.dark,
         /* dark theme settings */
-        scaffoldBackgroundColor: Color.fromARGB(255, 5, 5, 20),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
         colorScheme: colorScheme,
-        navigationRailTheme: NavigationRailThemeData(
-          selectedIconTheme: IconThemeData(
-            color: Colors.blue,
-          ),
-          selectedLabelTextStyle: TextStyle(
-            color: Color.fromARGB(255, 0, 195, 255),
-            fontSize: 13,
-            letterSpacing: 0.8,
-            decoration: TextDecoration.underline,
-            decorationThickness: 2.0,
-          ),
-        ),
         fontFamily: "TiroDevanagariHindi",
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           headline2: TextStyle(
-            color: Colors.green,
-          ),
+              //color: Colors.green,
+              ),
         ),
       ),
       themeMode: ThemeMode.dark,

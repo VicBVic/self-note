@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itec20222/screens/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_good.dart';
+import 'package:itec20222/widgets/wavy_container.dart';
 
 class DesktopHomeScreen extends StatefulWidget {
   const DesktopHomeScreen({Key? key}) : super(key: key);
