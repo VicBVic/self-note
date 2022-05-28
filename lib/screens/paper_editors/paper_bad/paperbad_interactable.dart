@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:itec20222/consts.dart';
+import 'package:itec20222/screens/paper_editors/paper.dart';
 import 'package:itec20222/classes/color_picker_button.dart';
 import 'package:painter/painter.dart';
 
 class PaperBadInteractable extends StatefulWidget {
-  const PaperBadInteractable({Key? key}) : super(key: key);
+  final bool burning;
+  const PaperBadInteractable({Key? key, this.burning = false})
+      : super(key: key);
 
   @override
   State<PaperBadInteractable> createState() => _PaperBadInteractableState();
@@ -27,23 +31,27 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(40),
-      height: 800.0,
+      height: paperHeight,
       child: Row(
         children: [
           Flexible(
             fit: FlexFit.tight,
             flex: 1,
             child: Stack(
+              fit: StackFit.expand,
               children: [
-                Image.asset(
-                  'textures/dummy-no-royalty.jpg',
-                  fit: BoxFit.cover,
+                Container(
+                  child: Paper(
+                    anitmationDuration: Duration(seconds: 10),
+                    color: Colors.black,
+                    pointCount: 30,
+                    burning: widget.burning,
+                  ),
                 ),
                 Painter(_controller),
               ],
             ),
           ),
-          VerticalDivider(),
           Container(
             padding: EdgeInsets.symmetric(vertical: 5.0),
             child: Column(
@@ -78,20 +86,6 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                         ),
                         label: Text(
                           'Draw',
-                        ),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(Icons.favorite_border),
-                        label: Text(
-                          'Add hearts',
-                        ),
-                      ),
-                      NavigationRailDestination(
-                        icon: Icon(
-                          Icons.star_border,
-                        ),
-                        label: Text(
-                          'Add stars',
                         ),
                       ),
                     ],
