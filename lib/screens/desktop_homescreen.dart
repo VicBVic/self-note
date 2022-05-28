@@ -32,7 +32,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                 return [
                   PopupMenuItem(
                     child: Text('Log in'),
-                    onTap: () => Navigator.pushNamed(context, '/login'),
+                    onTap: () => Navigator.pushNamed(context, '/signin'),
                   ),
                 ];
               }

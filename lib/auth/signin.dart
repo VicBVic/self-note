@@ -73,6 +73,7 @@ class _SigninPageState extends State<SigninPage> {
         )
       );
     }
+    final user = FirebaseAuth.instance.currentUser;
   }
 
   @override
