@@ -15,9 +15,9 @@ const colorScheme = ColorScheme(
   primary: Colors.amber,
   secondary: Color.fromARGB(255, 155, 155, 155),
   onPrimary: Colors.black87,
-  onSecondary: Colors.white70,
+  onSecondary: Colors.black,
   background: Colors.black,
-  onBackground: Colors.white,
+  onBackground: Colors.black,
   error: Colors.red,
   onError: Colors.white,
   surface: Color.fromARGB(255, 14, 13, 15),
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/paperbad',
+      initialRoute: '/papers',
       routes: {
         '/papers': (context) => MyHomePage(
               title: 'Bad thoughts paper',
