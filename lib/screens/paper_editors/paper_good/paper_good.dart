@@ -24,6 +24,11 @@ class _PaperGoodState extends State<PaperGood> {
   int _selectedIndex = 0;
   List<Widget> desc = [];
 
+  PaperGoodInteractable PG = new PaperGoodInteractable
+  (
+    paperHeight: 400,
+  );
+
   @override
   Widget build(BuildContext context) {
     TextStyle h1 = Theme.of(context).textTheme.headline2!;
@@ -52,16 +57,12 @@ class _PaperGoodState extends State<PaperGood> {
                     style: b1.copyWith(
                         fontSize: 22.0, height: 1, color: Colors.black)),
               ),
-              PaperGoodInteractable(
-                paperHeight: 400,
-              ),
+              PG,
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 300.0, vertical: 20.0),
                 child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {});
-                  },
+                  onPressed: PG.save,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
