@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -22,7 +24,7 @@ class PaperBadInteractable extends StatefulWidget {
 }
 
 class _PaperBadInteractableState extends State<PaperBadInteractable> {
-  int _selectedIndex = 0;
+  int paintsWithBrush = 0;
 
   PainterController _controller = _newController();
 
@@ -43,6 +45,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
         child: Row(
           children: [
             DrawablePaperBad(
+              paintsWithBrush: (paintsWithBrush == 1),
               widget: widget,
               controller: _controller,
               forMobile: widget.forMobile,
@@ -60,10 +63,10 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                       selectedLabelTextStyle: Theme.of(context)
                           .navigationRailTheme
                           .selectedLabelTextStyle,
-                      selectedIndex: _selectedIndex,
+                      selectedIndex: paintsWithBrush,
                       onDestinationSelected: (index) {
                         setState(() {
-                          _selectedIndex = index;
+                          paintsWithBrush = index;
                         });
                       },
                       labelType: NavigationRailLabelType.selected,
@@ -120,26 +123,55 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
   }
 }
 
-class DrawablePaperBad extends StatelessWidget {
-  DrawablePaperBad(
-      {Key? key,
-      required this.widget,
-      required PainterController controller,
-      required this.forMobile})
-      : _controller = controller,
+class DrawablePaperBad extends StatefulWidget {
+  DrawablePaperBad({
+    Key? key,
+    required this.widget,
+    required PainterController controller,
+    required this.forMobile,
+    required this.paintsWithBrush,
+  })  : _controller = controller,
         super(key: key);
 
   final PaperBadInteractable widget;
   final PainterController _controller;
   final forMobile;
+  bool paintsWithBrush;
+
+  @override
+  State<DrawablePaperBad> createState() => _DrawablePaperBadState();
+}
+
+class _DrawablePaperBadState extends State<DrawablePaperBad> {
+  String initText = '';
 
   @override
   Widget build(BuildContext context) {
+    Widget theTextFieldOnPaper = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 75),
+      child: TextFormField(
+        initialValue: initText,
+        onChanged: (value) {
+          setState(() {
+            initText = value;
+          });
+        },
+        style: TextStyle(
+          fontSize: 24,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+        keyboardType: TextInputType.multiline,
+        minLines: 25,
+        maxLines: 25,
+      ),
+    );
+
     return Flexible(
       fit: FlexFit.tight,
       flex: 1,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: forMobile ? 0 : 100.0),
+        padding: EdgeInsets.symmetric(horizontal: widget.forMobile ? 0 : 100.0),
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -147,7 +179,7 @@ class DrawablePaperBad extends StatelessWidget {
               height: paperHeight,
               child: Image.asset(
                 'textures/papyrus_paper.png',
-                fit: BoxFit.fill,
+                fit: BoxFit.fitWidth,
               ),
             ),
             Container(
@@ -155,7 +187,7 @@ class DrawablePaperBad extends StatelessWidget {
                 anitmationDuration: Duration(seconds: 10),
                 color: Colors.black,
                 pointCount: 30,
-                burning: widget.burning,
+                burning: widget.widget.burning,
               ),
             ),
             Container(
@@ -165,7 +197,12 @@ class DrawablePaperBad extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
             ),
-            Painter(_controller),
+            widget.paintsWithBrush
+                ? theTextFieldOnPaper
+                : Painter(widget._controller),
+            widget.paintsWithBrush
+                ? Painter(widget._controller)
+                : theTextFieldOnPaper,
           ],
         ),
       ),

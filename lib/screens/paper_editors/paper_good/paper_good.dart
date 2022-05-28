@@ -26,8 +26,9 @@ class _PaperGoodState extends State<PaperGood> {
   int _selectedIndex = 0;
   List<Widget> desc = [];
 
-  PaperGoodInteractable PG = new PaperGoodInteractable(
+  PaperGoodInteractable PG = PaperGoodInteractable(
     paperHeight: 400,
+    padding: 100,
   );
 
   @override

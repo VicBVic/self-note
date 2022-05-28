@@ -41,6 +41,9 @@ class _PaperBadState extends State<PaperBad> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+            Text(
+              'Write your negative thoughts on the paper below:',
+            ),
             AnimatedOpacity(
               duration: Duration(seconds: 2),
               opacity: editorOp,

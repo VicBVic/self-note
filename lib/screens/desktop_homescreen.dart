@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:itec20222/screens/good_memories.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
@@ -25,6 +26,26 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: Text('Sign up'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/signin');
+              },
+              child: Text('Sign in'),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text(
           widget.title,
