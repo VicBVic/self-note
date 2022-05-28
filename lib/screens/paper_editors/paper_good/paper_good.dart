@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/papergood_interactable.dart';
+import 'package:itec20222/widgets/paragraph-provider.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
 class PaperGood extends StatefulWidget {
@@ -107,36 +108,11 @@ class _PaperGoodState extends State<PaperGood> {
         //print(serialized);
         for (var paragraph in serialized) {
           var argb = paragraph['Color'];
-          desc.add(WavyContainer(
-            height: paragraph['Height'],
-            width: double.infinity,
-            waveProcent: 1.0 +
-                (((widget.paragraphWaveHeight ?? defHeight) + 8) /
-                    (paragraph['Height'])),
-            waveHeight: widget.paragraphWaveHeight ?? defHeight,
-            waveLength: widget.paragraphWaveLength ?? defLen,
-            waveSpeed: widget.paragraphWaveSpeed ?? defSpeed,
-            color: Color.fromARGB(argb[0], argb[1], argb[2], argb[3]),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(64,
-                      (widget.paragraphWaveHeight ?? defHeight) + 16, 0, 64),
-                  child: Text(
-                    paragraph['Title'],
-                    style: h1,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 0, 32),
-                  child: Text(
-                    paragraph['Content'],
-                    style: b1,
-                  ),
-                ),
-              ],
-            ),
+          desc.add(ParagraphProvider(
+            data: paragraph,
+            waveHeight: widget.paragraphWaveHeight,
+            waveLength: widget.paragraphWaveLength,
+            waveSpeed: widget.paragraphWaveSpeed,
           ));
         }
       });

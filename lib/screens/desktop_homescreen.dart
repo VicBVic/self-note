@@ -18,7 +18,7 @@ class DesktopHomeScreen extends StatefulWidget {
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   bool userIsLoggedIn = user != null;
-  bool isBad = false;
+  bool isBad = true;
   StreamController streamController = StreamController();
 
   @override
