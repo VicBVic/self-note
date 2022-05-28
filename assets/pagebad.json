@@ -3,13 +3,21 @@
         "Title":"What is Selfnote?",
         "Content": "This website is a note-taking form for writing down all negative thoughts that bothered or made you feel sad troughout the day. \n Feel free to express yourself in any way the note, such as writing a letter to somebody, listing your emotions or just doodling. \n When you are finished, don't reread what you wrote, this might bring back the bad feelings. Just press the burn button above to destroy the paper.",
         "Color":[255,14,14,14],
-        "Height":750
+        "Height":750,
+        "Type":"InfoLeft"
     },
     {
         "Title":"Why should you use this website?",
         "Content": "Often we hold our negative thoughts inside of ourselves. They have energy and they tend to attract more negativity into our lives. By transforming this energy in any way, for example by writing and burning it, you help get it out from within you and in a sense “recycle” it into something better. It helps purge the pain and negativity from you and move the energy into a more positive state. \nThis technique is also known as Purge Emotional Writing.",
         "Color":[255,30,30,35],
-        "Height":750.0
+        "Height":750.0,
+        "Type":"InfoRight"
+    },
+    {
+        "Title":"You are not alone.",
+        "Type":"UserData",
+        "Height":550.0,
+        "Color":[255,100,100,125]
     }
 
 ]
