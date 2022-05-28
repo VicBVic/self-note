@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +19,15 @@ class DesktopHomeScreen extends StatefulWidget {
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   bool userIsLoggedIn = user!=null;
   bool isBad = true;
+  StreamController streamController = StreamController();
 
   @override
   Widget build(BuildContext context) {
+    Stream stream = streamController.stream;
+    stream.listen((value) {
+      print('Value from controller: $value');
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -33,9 +41,21 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               if (!userIsLoggedIn) {
                 return [
                   PopupMenuItem(
+<<<<<<< HEAD
                     child: Text('Sign in'),
                     onTap: () => Navigator.pushNamed(context, '/signin'),
                   ),
+=======
+                      child: Text('Log in'),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/signin');
+                      }),
+                  PopupMenuItem(
+                      child: Text('Register'),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/signup');
+                      }),
+>>>>>>> cb50ca9633c35cc15f61bb7db6fdbeeca61ec552
                 ];
               }
               return [
@@ -50,7 +70,13 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
       ),
       body: ListView(
         children: [
-          isBad ? PaperBad() : PaperGood(),
+          AnimatedCrossFade(
+            duration: const Duration(seconds: 3),
+            firstChild: PaperBad(),
+            secondChild: PaperGood(),
+            crossFadeState:
+                isBad ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          ),
         ],
       ),
     );

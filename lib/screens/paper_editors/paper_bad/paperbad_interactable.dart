@@ -39,19 +39,36 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
           Flexible(
             fit: FlexFit.tight,
             flex: 1,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Container(
-                  child: Paper(
-                    anitmationDuration: Duration(seconds: 10),
-                    color: Colors.black,
-                    pointCount: 30,
-                    burning: widget.burning,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 100.0),
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Container(
+                    height: paperHeight,
+                    child: Image.asset(
+                      'textures/papyrus_paper.png',
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                Painter(_controller),
-              ],
+                  Container(
+                    child: Paper(
+                      anitmationDuration: Duration(seconds: 10),
+                      color: Colors.black,
+                      pointCount: 30,
+                      burning: widget.burning,
+                    ),
+                  ),
+                  Container(
+                    height: paperHeight,
+                    child: Image.asset(
+                      'textures/paper_border.png',
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  Painter(_controller),
+                ],
+              ),
             ),
           ),
           Container(

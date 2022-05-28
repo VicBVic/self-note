@@ -33,11 +33,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+<<<<<<< HEAD
       initialRoute: '/papers',
+=======
+      initialRoute: '/',
+>>>>>>> cb50ca9633c35cc15f61bb7db6fdbeeca61ec552
       routes: {
-        '/papers': (context) => MyHomePage(
-              title: 'Bad thoughts paper',
-            ),
+        '/': (context) => MyHomePage(title: 'SelfNote'),
         '/signin': (context) => SigninPage(),
         '/signup': (context) => SignupPage(),
       },

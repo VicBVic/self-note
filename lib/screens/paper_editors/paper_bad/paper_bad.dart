@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:itec20222/consts.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
 import 'package:itec20222/widgets/footer.dart';
@@ -28,9 +30,12 @@ class _PaperBadState extends State<PaperBad> {
   double editorOp = 0.0;
   bool burning = false;
   List<Widget> desc = [];
+  StreamController<bool> controller = StreamController<bool>();
 
   @override
   Widget build(BuildContext context) {
+    Stream stream = controller.stream;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -48,6 +53,8 @@ class _PaperBadState extends State<PaperBad> {
                 onPressed: () {
                   setState(() {
                     burning = true;
+                    //sleep(Duration(seconds: 4));
+                    isBad = false;
                   });
                 },
                 child: Padding(
