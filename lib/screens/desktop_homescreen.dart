@@ -24,11 +24,6 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   bool isBad = false;
   StreamController streamController = StreamController();
 
-<<<<<<< HEAD
-  void gotomem()
-  {
-    Navigator.pushNamed(context, '/memories');
-=======
   void autoLogIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userId = prefs.getString('username');
@@ -54,7 +49,6 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   void initState() {
     autoLogIn();
     super.initState();
->>>>>>> octa
   }
 
   @override
@@ -81,15 +75,6 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                   ),
                 ],
               )
-<<<<<<< HEAD
-            : Center(
-                child: TextButton(
-                  child: Text('Memories'),
-                  onPressed: () {
-                    gotomem();
-                  },
-                ),
-=======
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -102,7 +87,6 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                   ),
                   TextButton(onPressed: logOut, child: Text('Sign out')),
                 ],
->>>>>>> octa
               ),
       ),
       appBar: AppBar(
@@ -112,37 +96,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
         ),
         actions: [
-<<<<<<< HEAD
-          PopupMenuButton(
-            itemBuilder: (context) {
-              if (user == null) {
-                return [
-                  PopupMenuItem(
-                      child: Text('Sign in'),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/signin');
-                      }),
-                  PopupMenuItem(
-                      child: Text('Register'),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/signup');
-                      }),
-                ];
-              }
-              return [
-                PopupMenuItem(
-                  child: Text('Log out'),
-                  onTap: ()
-                  {
-                    FirebaseAuth.instance.signOut();
-                  },
-                )
-              ];
-            },
-          ),
-=======
           Text(user == null ? 'You are not logged in' : 'You are logged in'),
->>>>>>> octa
         ],
       ),
       body: ListView(
