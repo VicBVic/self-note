@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:itec20222/robertstore.dart';
 
 class SignupPage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
@@ -65,6 +66,7 @@ class _SignupPageState extends State<SignupPage> {
                 ],
               ));
     } else {
+      Robertstore().Update_user_count(1);
       Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
     }
   }

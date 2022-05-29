@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:itec20222/auth/signup.dart';
+import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/screens/desktop_homescreen.dart';
 import 'package:itec20222/screens/good_memories.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
 import 'package:itec20222/auth/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+List<Map<String,dynamic>>? allData;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
