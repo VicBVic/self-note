@@ -155,6 +155,9 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
       padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 75),
       child: TextFormField(
         initialValue: initText,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+        ),
         onChanged: (value) {
           setState(() {
             initText = value;

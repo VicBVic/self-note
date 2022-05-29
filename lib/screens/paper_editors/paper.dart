@@ -101,8 +101,8 @@ class PaperBurner extends CustomPainter {
     }
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
-    outerPath.lineTo(size.width, size.height);
-    outerPath.lineTo(0, size.height);
+    outerPath.lineTo(size.width - 10, size.height - 10);
+    outerPath.lineTo(10, size.height - 10);
 
     Paint paint = Paint()..color = color;
 

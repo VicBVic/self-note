@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:itec20222/main.dart';
+import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +18,18 @@ class ParagraphProvider extends StatefulWidget {
 }
 
 class _ParagraphProviderState extends State<ParagraphProvider> {
+  String users = "0";
+
+  Future<void> getData() async {
+    users = (await Robertstore().Get_user_count()).toString();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     const double defHeight = 50;
@@ -120,14 +133,14 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                       child: Text(
-                        '12 Users wrote their selfnotes today.',
+                        '$users Users wrote their selfnotes today.',
                         style: b1,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                       child: Text(
-                        'A total of 405 people signed up for selfnote.',
+                        'A total of $users people signed up for selfnote.',
                         style: b1,
                       ),
                     ),

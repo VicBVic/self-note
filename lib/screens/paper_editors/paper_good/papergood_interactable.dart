@@ -30,9 +30,8 @@ class PaperGoodInteractable extends StatefulWidget {
 
   void save() async {
     String date = DateTime.now().toString().substring(0, 10);
-    print("da vere mere");
+
     if (user != null) {
-      print("pe bune");
       Robertstore().Add_entry_good_paper(user!.uid.toString(), date,
           thing[1].text, thing[2].text, thing[3].text, happiness);
       thing[1].text = thing[2].text = thing[3].text = "";
