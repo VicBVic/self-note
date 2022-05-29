@@ -14,7 +14,7 @@ class _SigninPageState extends State<SigninPage> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
 
-  void signin() async {
+  Future<void> signin() async {
     String email = emailcontroller.text;
     String pass = passwordcontroller.text;
     String error = "";
@@ -24,13 +24,12 @@ class _SigninPageState extends State<SigninPage> {
           .signInWithEmailAndPassword(email: email, password: pass);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        error = 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        error = 'Wrong password provided for that user.';
+        error = e.code;
       }
     }
 
     if (error != "") {
+      print('xyz: ' + error);
       showDialog(
           context: context,
           builder: (ontext) => AlertDialog(
@@ -94,7 +93,10 @@ class _SigninPageState extends State<SigninPage> {
                 padding: EdgeInsets.only(top: 25, bottom: 25),
                 child: ElevatedButton(
                   child: Text("Sign in"),
-                  onPressed: signin,
+                  onPressed: () async {
+                    await signin();
+                    //Navigator.pop(context);
+                  },
                 ),
               )
             ],

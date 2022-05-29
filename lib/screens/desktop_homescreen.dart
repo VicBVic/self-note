@@ -8,7 +8,7 @@ import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 
-final user = FirebaseAuth.instance.currentUser;
+//var user = FirebaseAuth.instance.currentUser;
 
 class DesktopHomeScreen extends StatefulWidget {
   String title;
@@ -19,32 +19,42 @@ class DesktopHomeScreen extends StatefulWidget {
 }
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
-  bool userIsLoggedIn = user != null;
+  //bool userIsLoggedIn = user != null;
   bool isBad = true;
   StreamController streamController = StreamController();
 
   @override
   Widget build(BuildContext context) {
+    var user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       drawer: Drawer(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signup');
-              },
-              child: Text('Sign up'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signin');
-              },
-              child: Text('Sign in'),
-            ),
-          ],
-        ),
+        child: (user == null)
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                    child: Text('Sign up'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signin');
+                    },
+                    child: Text('Sign in'),
+                  ),
+                ],
+              )
+            : Center(
+                child: TextButton(
+                  child: Text('Memories'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/memories');
+                  },
+                ),
+              ),
       ),
       appBar: AppBar(
         title: Text(
@@ -55,7 +65,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         actions: [
           PopupMenuButton(
             itemBuilder: (context) {
-              if (!userIsLoggedIn) {
+              if (user == null) {
                 return [
                   PopupMenuItem(
                       child: Text('Sign in'),
@@ -83,8 +93,8 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         children: [
           AnimatedCrossFade(
             duration: const Duration(seconds: 3),
-            firstChild: PaperBad(),
-            secondChild: PaperGood(),
+            firstChild: PaperGood(),
+            secondChild: PaperBad(),
             crossFadeState:
                 isBad ? CrossFadeState.showFirst : CrossFadeState.showSecond,
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itec20222/auth/signup.dart';
 import 'package:itec20222/screens/desktop_homescreen.dart';
+import 'package:itec20222/screens/good_memories.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
 import 'package:itec20222/auth/signin.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => DesktopHomeScreen(title: 'SelfNote'),
         '/signin': (context) => SigninPage(),
         '/signup': (context) => SignupPage(),
+        '/memories': (context) => GoodMemos(),
       },
       title: 'SelfNote',
       debugShowCheckedModeBanner: false,
