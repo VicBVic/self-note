@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninPage extends StatefulWidget {
   SigninPage({Key? key}) : super(key: key);
@@ -22,10 +23,12 @@ class _SigninPageState extends State<SigninPage> {
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pass);
+
+      var user = FirebaseAuth.instance.currentUser;
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('username', user!.uid);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        error = e.code;
-      }
+      error = e.code;
     }
 
     if (error != "") {

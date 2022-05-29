@@ -37,14 +37,22 @@ class _PaperBadState extends State<PaperBad> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle h1 = Theme.of(context).textTheme.headline2!.copyWith(
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      );
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-            Text(
+            Center
+            (
+              child: Text(
               'Write your negative thoughts on the paper below:',
+              style: h1,
+              ),
             ),
             AnimatedOpacity(
               duration: Duration(seconds: 2),

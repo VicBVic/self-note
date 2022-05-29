@@ -135,7 +135,7 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                       child: Text(
-                        '30$users Users wrote their selfnotes today.',
+                        '285 Users wrote their selfnotes today.',
                         style: b1,
                       ),
                     ),

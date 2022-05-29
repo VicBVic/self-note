@@ -33,7 +33,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
   static PainterController _newController() {
     PainterController controller = new PainterController();
     controller.thickness = 5.0;
-    controller.backgroundColor = Color.fromARGB(0, 0, 0, 0);
+    controller.backgroundColor = const Color.fromARGB(0, 0, 0, 0);
     return controller;
   }
 
@@ -42,7 +42,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
     //if(!widget.forMobile)
     {
       return Container(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         height: widget.paperHeight,
         child: Row(
           children: [
@@ -54,7 +54,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
               forMobile: widget.forMobile,
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 5.0),
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Column(
                 children: [
                   SizedBox(
@@ -74,7 +74,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                       },
                       labelType: NavigationRailLabelType.selected,
                       destinations: [
-                        NavigationRailDestination(
+                        const NavigationRailDestination(
                           icon: Icon(
                             Icons.text_fields_outlined,
                           ),
@@ -82,11 +82,11 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                             'Write Text',
                           ),
                         ),
-                        NavigationRailDestination(
+                        const NavigationRailDestination(
                           icon: Icon(
                             Icons.brush_outlined,
                           ),
-                          label: Text(
+                          label: const Text(
                             'Draw',
                           ),
                         ),
@@ -106,13 +106,13 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                           showModalBottomSheet(
                               context: context,
                               builder: (BuildContext context) =>
-                                  Text('Nothing to undo'));
+                                  const Text('Nothing to undo'));
                         } else {
                           _controller.undo();
                         }
                       }),
                   IconButton(
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       tooltip: 'Clear',
                       onPressed: _controller.clear),
                   ColorPickerButton(_controller, false),
@@ -152,8 +152,11 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
   @override
   Widget build(BuildContext context) {
     Widget theTextFieldOnPaper = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 75),
+      padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 100),
       child: TextFormField(
+        decoration: InputDecoration(
+          border: InputBorder.none,
+        ),
         initialValue: initText,
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -163,7 +166,7 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
             initText = value;
           });
         },
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 24,
           color: Colors.black,
           fontWeight: FontWeight.bold,
