@@ -23,6 +23,11 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   bool isBad = true;
   StreamController streamController = StreamController();
 
+  void gotomem()
+  {
+    Navigator.pushNamed(context, '/memories');
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = FirebaseAuth.instance.currentUser;
@@ -51,7 +56,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                 child: TextButton(
                   child: Text('Memories'),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/memories');
+                    gotomem();
                   },
                 ),
               ),
@@ -82,7 +87,10 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               return [
                 PopupMenuItem(
                   child: Text('Log out'),
-                  //TODO: metoda de signout
+                  onTap: ()
+                  {
+                    FirebaseAuth.instance.signOut();
+                  },
                 )
               ];
             },
