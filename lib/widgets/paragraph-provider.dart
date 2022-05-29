@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ParagraphProvider extends StatefulWidget {
   final Map? data;
@@ -47,10 +48,11 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
     if (data == null) return Container();
     var argb = data['Color'];
 
-    print(data['Type']);
+    //print(data['Type']);
     switch (data['Type']) {
       case "InfoRight":
       case "InfoLeft":
+      case "InfoLink":
         {
           return WavyContainer(
             height: data['Height'],
@@ -82,6 +84,22 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
                     style: b1,
                   ),
                 ),
+                data['Type'] == "InfoLink"
+                    ? Center(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              final Uri toLaunch = Uri(
+                                  scheme: data['Link'][0],
+                                  host: data['Link'][1],
+                                  path: data['Link'][2]);
+                              launchUrl(toLaunch);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(data['Button']),
+                            )),
+                      )
+                    : Container(),
               ],
             ),
           );
@@ -142,5 +160,13 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
         }
     }
     return Container();
+  }
+
+  void openStite(Uri url) async {
+    //Uri? uri = Uri.tryParse("https://flutter.io");
+    if (await canLaunchUrl(url))
+      await launchUrl(url);
+    else
+      throw "Could not launch $url";
   }
 }
