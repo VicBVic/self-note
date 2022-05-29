@@ -21,18 +21,19 @@ class _GoodMemosState extends State<GoodMemos> {
     return Scaffold(
       body: ListView(
         children: [
-          Text(
-              'Here you can see all your past good thoughts. Funny, wholesome or emotional, they can make your day!'),
-          // allData.map(context, (e) {
-          //   return MemoryCard(
-          //       things: [e["thing1"], e["thing2"], e["thing3"]],
-          //       happiness: e["happiness"]);
-          // }),
-          MemoryCard(
-            things: ["pisica", "octa", "luca"],
-            happiness: 5,
-          )
-        ],
+              Text(
+                  'Here you can see all your past good thoughts. Funny, wholesome or emotional, they can make your day!'),
+              // allData.map(context, (e) {
+              //   return MemoryCard(
+              //       things: [e["thing1"], e["thing2"], e["thing3"]],
+              //       happiness: e["happiness"]);
+              // }),
+              MemoryCard(
+                things: ["pisica", "octa", "luca"],
+                happiness: 5,
+              )
+            ] +
+            cards,
       ),
     );
   }
@@ -47,8 +48,7 @@ class _GoodMemosState extends State<GoodMemos> {
 
   @override
   void initState() {
-    fetchMemories();
-    loadCards();
+    fetchMemories().then((value) => loadCards());
   }
 
   void loadCards() async {

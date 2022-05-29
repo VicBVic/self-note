@@ -21,7 +21,6 @@ class DesktopHomeScreen extends StatefulWidget {
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   //bool userIsLoggedIn = user != null;
   bool isBad = true;
-  StreamController streamController = StreamController();
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +93,16 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
           AnimatedCrossFade(
             duration: const Duration(seconds: 3),
             firstChild: PaperGood(),
-            secondChild: PaperBad(),
+            secondChild: PaperBad(
+              onBurned: () {
+                setState(() {
+                  //print("mata");
+                  isBad = false;
+                });
+              },
+            ),
             crossFadeState:
-                isBad ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                isBad ? CrossFadeState.showSecond : CrossFadeState.showFirst,
           ),
         ],
       ),

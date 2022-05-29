@@ -18,10 +18,12 @@ class PaperBad extends StatefulWidget {
     this.paragraphWaveHeight,
     this.paragraphWaveLength,
     this.paragraphWaveSpeed,
+    required this.onBurned,
   }) : super(key: key);
   final double? paragraphWaveHeight;
   final double? paragraphWaveLength;
   final double? paragraphWaveSpeed;
+  final Function onBurned;
 
   @override
   State<PaperBad> createState() => _PaperBadState();
@@ -48,6 +50,7 @@ class _PaperBadState extends State<PaperBad> {
               duration: Duration(seconds: 2),
               opacity: editorOp,
               child: PaperBadInteractable(
+                onBurned: widget.onBurned,
                 forMobile: (screenHeight > screenWidth),
                 burning: burning,
               ),

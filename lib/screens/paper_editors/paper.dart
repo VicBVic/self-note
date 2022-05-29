@@ -10,13 +10,15 @@ class Paper extends StatefulWidget {
   final Duration? anitmationDuration;
   final bool burning;
   final double paperHeight;
+  final Function onBurned;
   Paper(
       {Key? key,
       this.pointCount = 30,
       this.color = Colors.white,
       this.anitmationDuration,
       this.burning = true,
-      this.paperHeight = 750})
+      this.paperHeight = 750,
+      required this.onBurned})
       : super(key: key);
 
   @override
@@ -40,11 +42,15 @@ class _PaperState extends State<Paper> with SingleTickerProviderStateMixin {
     for (int i = 0; i < widget.pointCount; i++) {
       points.add(0.0);
     }
+
     _controller.addListener(() {
       setState(() {
         for (int i = 0; i < points.length; i++) {
-          points[i] =
-              points[i] + Random().nextDouble() * 100 * _animation.value;
+          points[i] = points[i] +
+              Random().nextDouble() *
+                  paperHeight /
+                  (widget.anitmationDuration!.inSeconds * 10) *
+                  _animation.value;
         }
       });
       //yprint(points);
@@ -53,9 +59,13 @@ class _PaperState extends State<Paper> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.burning == true)
-      _controller.forward();
-    else
+    if (widget.burning == true) if (_controller.status !=
+        AnimationStatus.completed) {
+      _controller.forward().then((value) {
+        widget.onBurned();
+        //print("vere");
+      });
+    } else
       _controller.animateTo(0.001);
     return Stack(
       fit: StackFit.expand,
