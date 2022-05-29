@@ -28,16 +28,6 @@ class PaperGoodInteractable extends StatefulWidget {
     required this.padding,
   }) : super(key: key);
 
-<<<<<<< HEAD
-  void save() async {
-    String date = DateTime.now().toString().substring(0, 10);
-
-    if (user != null) {
-      Robertstore().Add_entry_good_paper(user!.uid.toString(), date,
-          thing[1].text, thing[2].text, thing[3].text, happiness);
-      thing[1].text = thing[2].text = thing[3].text = "";
-      //print(object)
-=======
   void save() async
   {
     String date = DateTime.now().toString().substring(0,10);
@@ -46,7 +36,6 @@ class PaperGoodInteractable extends StatefulWidget {
     {
       Robertstore().Add_entry_good_paper(user!.uid.toString(), date, thing[1].text, thing[2].text, thing[3].text, happiness);
       thing[1].text = thing[2].text = thing[3].text = "";
->>>>>>> 000c572ff90244eb82b20b77911251adabca3c8b
     }
   }
 
