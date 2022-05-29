@@ -20,8 +20,9 @@ class DesktopHomeScreen extends StatefulWidget {
 }
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
+  
   //bool userIsLoggedIn = user != null;
-  bool isBad = false;
+  bool isBad = true;
   StreamController streamController = StreamController();
 
   void autoLogIn() async {
@@ -53,6 +54,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+      TextStyle b1 = Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
     var user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       drawer: Drawer(
@@ -96,7 +98,13 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
         ),
         actions: [
-          Text(user == null ? 'You are not logged in' : 'You are logged in'),
+          Text(
+            user == null ?
+            'You are not logged in' 
+            : 
+            'You are logged in',
+            style: b1,
+          ),
         ],
       ),
       body: ListView(
