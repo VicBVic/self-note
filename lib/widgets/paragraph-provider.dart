@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itec20222/main.dart';
 import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,10 +18,9 @@ class ParagraphProvider extends StatefulWidget {
 }
 
 class _ParagraphProviderState extends State<ParagraphProvider> {
-
   String users = "0";
 
-  void getData(int u){
+  void getData(int u) {
     setState(() {
       users = u.toString();
     });
@@ -34,21 +34,21 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle h1 = Theme.of(context).textTheme.headline2!.copyWith(
-        decoration: TextDecoration.underline,
-        fontWeight: FontWeight.bold,
-        color: Colors.white);
-    TextStyle h2 = Theme.of(context).textTheme.headline2!;
-    TextStyle b1 =
-        Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
-
     const double defHeight = 50;
     const double defLen = 350;
     const double defSpeed = 1;
     var data = widget.data;
     if (data == null) return Container();
     var argb = data['Color'];
-
+    Color bcolor = Color.fromARGB(argb[0], argb[1], argb[2], argb[3]);
+    TextStyle h1 = Theme.of(context).textTheme.headline2!.copyWith(
+        decoration: TextDecoration.underline,
+        fontWeight: FontWeight.bold,
+        color: bcolor.computeLuminance() > 0.5 ? Colors.black : Colors.white);
+    TextStyle h2 = Theme.of(context).textTheme.headline2!;
+    TextStyle b1 = Theme.of(context).textTheme.bodyLarge!.copyWith(
+        fontSize: 22.0,
+        color: bcolor.computeLuminance() > 0.5 ? Colors.black : Colors.white);
     //print(data['Type']);
     switch (data['Type']) {
       case "InfoRight":
@@ -142,7 +142,7 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                       child: Text(
-                        'A total of 30$users people signed up for selfnote.',
+                        'A total of $users people signed up for selfnote.',
                         style: b1,
                       ),
                     ),

@@ -11,10 +11,12 @@ import 'package:painter/painter.dart';
 class PaperBadInteractable extends StatefulWidget {
   final bool burning;
   final double? paperHeight;
+  final Function onBurned;
   PaperBadInteractable({
     Key? key,
     this.burning = false,
     this.paperHeight = 750,
+    required this.onBurned,
     required this.forMobile,
   }) : super(key: key);
 
@@ -45,6 +47,7 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
         child: Row(
           children: [
             DrawablePaperBad(
+              onBurned: widget.onBurned,
               paintsWithBrush: (paintsWithBrush == 1),
               widget: widget,
               controller: _controller,
@@ -130,9 +133,10 @@ class DrawablePaperBad extends StatefulWidget {
     required PainterController controller,
     required this.forMobile,
     required this.paintsWithBrush,
+    required this.onBurned,
   })  : _controller = controller,
         super(key: key);
-
+  final Function onBurned;
   final PaperBadInteractable widget;
   final PainterController _controller;
   final forMobile;
@@ -154,6 +158,9 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
           border: InputBorder.none,
         ),
         initialValue: initText,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+        ),
         onChanged: (value) {
           setState(() {
             initText = value;
@@ -187,7 +194,8 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
             ),
             Container(
               child: Paper(
-                anitmationDuration: const Duration(seconds: 10),
+                onBurned: widget.onBurned,
+                anitmationDuration: Duration(seconds: 5),
                 color: Colors.black,
                 pointCount: 30,
                 burning: widget.widget.burning,

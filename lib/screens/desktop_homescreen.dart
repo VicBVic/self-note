@@ -23,7 +23,6 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   
   //bool userIsLoggedIn = user != null;
   bool isBad = true;
-  StreamController streamController = StreamController();
 
   void autoLogIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -111,10 +110,16 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         children: [
           AnimatedCrossFade(
             duration: const Duration(seconds: 3),
-            firstChild: PaperBad(),
-            secondChild: PaperGood(),
+            firstChild: PaperGood(),
+            secondChild: PaperBad(
+              onBurned: () {
+                setState(() {
+                  isBad = false;
+                });
+              },
+            ),
             crossFadeState:
-                isBad ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                isBad ? CrossFadeState.showSecond : CrossFadeState.showFirst,
           ),
         ],
       ),
