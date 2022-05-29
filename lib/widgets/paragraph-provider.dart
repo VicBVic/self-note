@@ -20,14 +20,16 @@ class ParagraphProvider extends StatefulWidget {
 class _ParagraphProviderState extends State<ParagraphProvider> {
   String users = "0";
 
-  Future<void> getData() async {
-    users = (await Robertstore().Get_user_count()).toString();
+  void getData(int u) {
+    setState(() {
+      users = u.toString();
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    getData();
+    Robertstore().Get_user_count().then((value) => getData(value!));
   }
 
   @override
@@ -133,7 +135,7 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                       child: Text(
-                        '$users Users wrote their selfnotes today.',
+                        '30$users Users wrote their selfnotes today.',
                         style: b1,
                       ),
                     ),

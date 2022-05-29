@@ -30,7 +30,7 @@ class PaperBad extends StatefulWidget {
 }
 
 class _PaperBadState extends State<PaperBad> {
-  double editorOp = 0.0;
+  double editorOp = 1.0;
   bool burning = false;
   List<Widget> desc = [];
   StreamController<bool> controller = StreamController<bool>();
@@ -85,11 +85,16 @@ class _PaperBadState extends State<PaperBad> {
 
   @override
   void initState() {
-    //editorOp = 0.0;
+    editorOp = 0.0;
     loadDesc();
     Future.delayed(Duration(milliseconds: 300), () {
       editorOp = 1;
     }).then((value) => print(value));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        editorOp = 1;
+      });
+    });
   }
 
   void loadDesc() async {
