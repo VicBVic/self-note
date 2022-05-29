@@ -30,6 +30,7 @@ class _MemoryCardState extends State<MemoryCard> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.things);
     return Card(
       color: Color.lerp(
           Colors.red, Colors.green, widget.happiness.toDouble() / 10),
