@@ -7,6 +7,7 @@ import 'package:itec20222/screens/good_memories.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //var user = FirebaseAuth.instance.currentUser;
 
@@ -20,12 +21,40 @@ class DesktopHomeScreen extends StatefulWidget {
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   //bool userIsLoggedIn = user != null;
-  bool isBad = true;
+  bool isBad = false;
   StreamController streamController = StreamController();
 
+<<<<<<< HEAD
   void gotomem()
   {
     Navigator.pushNamed(context, '/memories');
+=======
+  void autoLogIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userId = prefs.getString('username');
+
+    if (userId != null && userId != '') {
+      setState(() {
+        // isLoggedIn = true;
+        // name = userId;
+      });
+      return;
+    }
+  }
+
+  void logOut() async {
+    setState(() async {
+      FirebaseAuth.instance.signOut();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('username', '');
+    });
+  }
+
+  @override
+  void initState() {
+    autoLogIn();
+    super.initState();
+>>>>>>> octa
   }
 
   @override
@@ -52,6 +81,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                   ),
                 ],
               )
+<<<<<<< HEAD
             : Center(
                 child: TextButton(
                   child: Text('Memories'),
@@ -59,6 +89,20 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                     gotomem();
                   },
                 ),
+=======
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    child: Text('Memories'),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/memories');
+                    },
+                  ),
+                  TextButton(onPressed: logOut, child: Text('Sign out')),
+                ],
+>>>>>>> octa
               ),
       ),
       appBar: AppBar(
@@ -68,6 +112,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
         ),
         actions: [
+<<<<<<< HEAD
           PopupMenuButton(
             itemBuilder: (context) {
               if (user == null) {
@@ -95,14 +140,17 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
               ];
             },
           ),
+=======
+          Text(user == null ? 'You are not logged in' : 'You are logged in'),
+>>>>>>> octa
         ],
       ),
       body: ListView(
         children: [
           AnimatedCrossFade(
             duration: const Duration(seconds: 3),
-            firstChild: PaperGood(),
-            secondChild: PaperBad(),
+            firstChild: PaperBad(),
+            secondChild: PaperGood(),
             crossFadeState:
                 isBad ? CrossFadeState.showFirst : CrossFadeState.showSecond,
           ),
