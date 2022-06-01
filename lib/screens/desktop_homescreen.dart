@@ -20,7 +20,6 @@ class DesktopHomeScreen extends StatefulWidget {
 }
 
 class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
-  
   //bool userIsLoggedIn = user != null;
   bool isBad = true;
 
@@ -38,11 +37,8 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   }
 
   void logOut() async {
-    setState(() async {
-      FirebaseAuth.instance.signOut();
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('username', '');
-    });
+    FirebaseAuth.instance.signOut();
+    setState(() {});
   }
 
   @override
@@ -53,7 +49,8 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-      TextStyle b1 = Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
+    TextStyle b1 =
+        Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
     var user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       drawer: Drawer(
@@ -98,10 +95,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         ),
         actions: [
           Text(
-            user == null ?
-            'You are not logged in' 
-            : 
-            'You are logged in',
+            user == null ? 'You are not logged in' : 'You are logged in',
             style: b1,
           ),
         ],

@@ -158,9 +158,6 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
           border: InputBorder.none,
         ),
         initialValue: initText,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-        ),
         onChanged: (value) {
           setState(() {
             initText = value;

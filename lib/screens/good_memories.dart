@@ -14,22 +14,35 @@ class GoodMemos extends StatefulWidget {
 }
 
 class _GoodMemosState extends State<GoodMemos> {
-  List<List<String>> s = [[]];
+  List<List<String>> s = [];
+  List<int> happlist = [];
+  List<String> datele = [];
   @override
   Widget build(BuildContext context) {
     //print(mem);
-    return FutureBuilder(
-        future: Robertstore().fetchMemories(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-          if (snapshot.hasData) loadCards(snapshot.data!);
-          return ListView.builder(
-            itemCount: s.length,
-            itemBuilder: (context, index) {
-              return MemoryCard(happiness: 5, things: s[index]);
-            },
-          );
-        });
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Good Memories'),
+      ),
+      body: FutureBuilder(
+          future: Robertstore().fetchMemories(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+            if (snapshot.hasData) loadCards(snapshot.data!);
+            return GridView.builder(
+              itemCount: s.length,
+              itemBuilder: (context, index) {
+                return MemoryCard(
+                  date: '2022',
+                  happiness: happlist[index],
+                  things: s[index],
+                );
+              },
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, childAspectRatio: 3),
+            );
+          }),
+    );
   }
 
   @override
@@ -38,9 +51,9 @@ class _GoodMemosState extends State<GoodMemos> {
   }
 
   void loadCards(List<Map<String, dynamic>> allData) {
-    print("here");
     for (var e in allData) {
       s.add([e["thing1"], e["thing2"], e["thing3"]]);
+      happlist.add(e["happiness"]);
     }
   }
 }

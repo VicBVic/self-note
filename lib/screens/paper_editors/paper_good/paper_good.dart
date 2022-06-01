@@ -40,18 +40,11 @@ class _PaperGoodState extends State<PaperGood> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.width;
     var user = FirebaseAuth.instance.currentUser;
-    PaperGoodInteractable PG = new PaperGoodInteractable(
-      paperHeight: 400,
-      padding: (100),
-    );
 
     final snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
       content: Text('Saved to your memories!'),
     );
-
-    // Find the Scaffold in the widget tree and use
-    // it to show a SnackBar.
 
     final AlertDialog dialog = AlertDialog(
       title: Text('Warning'),
@@ -111,16 +104,22 @@ class _PaperGoodState extends State<PaperGood> {
                     style: b1.copyWith(
                         fontSize: 22.0, height: 1, color: Colors.black)),
               ),
-              PG,
+              PaperGoodInteractable(
+                paperHeight: 400,
+                padding: 100,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: (5 * screenWidth / 18), vertical: 20.0),
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (user != null) {
+                      await PaperGoodInteractable(
+                        paperHeight: 400,
+                        padding: 100,
+                      ).save;
                       Scaffold.of(context).showSnackBar(snackBar);
-                      //ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      PG.save;
+                      print("am incercat");
                     } else {
                       showDialog<void>(
                           context: context, builder: (context) => dialog);

@@ -12,12 +12,9 @@ import 'package:painter/painter.dart';
 final user = FirebaseAuth.instance.currentUser;
 
 class PaperGoodInteractable extends StatefulWidget {
-  List<TextEditingController> thing = [
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController(),
-    TextEditingController()
-  ];
+  TextEditingController thing1 = TextEditingController();
+  TextEditingController thing2 = TextEditingController();
+  TextEditingController thing3 = TextEditingController();
 
   final double paperHeight;
   late double padding;
@@ -28,13 +25,13 @@ class PaperGoodInteractable extends StatefulWidget {
     required this.padding,
   }) : super(key: key);
 
-  void save() async {
-    String date = DateTime.now().toString().substring(0, 10);
-
+  Future<void> save() async {
+    String date = await DateTime.now().toString().substring(0, 10);
+    print('se salveaza');
     if (user != null) {
       Robertstore().Add_entry_good_paper(user!.uid.toString(), date,
-          thing[1].text, thing[2].text, thing[3].text, happiness);
-      thing[1].text = thing[2].text = thing[3].text = "";
+          thing1.text, thing2.text, thing3.text, happiness);
+      thing1.text = thing2.text = thing3.text = "";
     }
   }
 
@@ -76,17 +73,17 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextFormField(
-                  controller: widget.thing[1],
+                  controller: widget.thing1,
                   style: b1,
                   decoration: dec,
                 ),
                 TextFormField(
-                  controller: widget.thing[2],
+                  controller: widget.thing2,
                   style: b1,
                   decoration: dec,
                 ),
                 TextFormField(
-                  controller: widget.thing[3],
+                  controller: widget.thing3,
                   style: b1,
                   decoration: dec,
                 ),
