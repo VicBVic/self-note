@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/papergood_interactable.dart';
@@ -24,64 +22,17 @@ class PaperGood extends StatefulWidget {
 }
 
 class _PaperGoodState extends State<PaperGood> {
-  int _selectedIndex = 0;
   List<Widget> desc = [];
-
-  PaperGoodInteractable PG = PaperGoodInteractable(
-    paperHeight: 400,
-    padding: 100,
-  );
 
   @override
   Widget build(BuildContext context) {
+    Widget PG = PaperGoodInteractable(
+      paperHeight: 400,
+      padding: 100,
+    );
     TextStyle h1 = Theme.of(context).textTheme.headline2!;
-    TextStyle h2 = Theme.of(context).textTheme.headline2!;
     TextStyle b1 = Theme.of(context).textTheme.bodyLarge!;
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.width;
-    var user = FirebaseAuth.instance.currentUser;
 
-    final snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
-      content: Text('Saved to your memories!'),
-    );
-
-    final AlertDialog dialog = AlertDialog(
-      title: Text('Warning'),
-      contentPadding: EdgeInsets.all(8),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text('You need to be logged in to save your memories!'),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/signup');
-                },
-                child: Text(
-                  'Register',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/signin');
-                },
-                child: Text(
-                  'Log in',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
     return Container(
       color: Colors.white,
       child: Column(
@@ -104,39 +55,7 @@ class _PaperGoodState extends State<PaperGood> {
                     style: b1.copyWith(
                         fontSize: 22.0, height: 1, color: Colors.black)),
               ),
-              PaperGoodInteractable(
-                paperHeight: 400,
-                padding: 100,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: (5 * screenWidth / 18), vertical: 20.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (user != null) {
-                      await PaperGoodInteractable(
-                        paperHeight: 400,
-                        padding: 100,
-                      ).save;
-                      Scaffold.of(context).showSnackBar(snackBar);
-                      print("am incercat");
-                    } else {
-                      showDialog<void>(
-                          context: context, builder: (context) => dialog);
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Save',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: Colors.black),
-                    ),
-                  ),
-                ),
-              ),
+              PG,
             ] +
             desc,
       ),
