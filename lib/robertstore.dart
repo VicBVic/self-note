@@ -53,11 +53,17 @@ class Robertstore {
       List<Map<String, dynamic>> allData = snapshot.docs
           .map((doc) => doc.data() as Map<String, dynamic>)
           .toList();
-      //print(allData);
+      print("aici e allData");
+      print(allData);
       return allData;
     }
     return [
-      {"thing1": "pisica", "thing2": "octa", "thing3": "luca", "happiness": 5}
+      {
+        "thing1": "There was an error",
+        "thing2": "because you are not",
+        "thing3": "registered.",
+        "happiness": 1
+      }
     ];
   }
 }
