@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "180380880828",
+    "project_id": "itec-b5aeb",
+    "storage_bucket": "itec-b5aeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180380880828:android:096ac89dad634922bfe5b9",
+        "android_client_info": {
+          "package_name": "com.example.itec20222"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180380880828-7psdhogfta32fha8dmis90vrt915f2nd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUt1fXIo701DMjmHFRmuF3XhKLXeJjuQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180380880828-7psdhogfta32fha8dmis90vrt915f2nd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "180380880828-924u1rkmt2mr6ms3m6bc8s1g3ajfs8vh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.itec20222"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

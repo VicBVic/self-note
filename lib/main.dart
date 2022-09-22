@@ -7,12 +7,15 @@ import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/myhomepage.dart';
 import 'package:itec20222/auth/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 List<Map<String,dynamic>>? allData;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
