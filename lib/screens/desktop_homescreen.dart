@@ -103,7 +103,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
       body: ListView(
         children: [
           AnimatedCrossFade(
-            duration: const Duration(seconds: 3),
+            duration: const Duration(seconds: 5),
             firstChild: PaperGood(),
             secondChild: PaperBad(
               onBurned: () {

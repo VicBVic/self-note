@@ -29,6 +29,7 @@ class _MemoryCardState extends State<MemoryCard> {
     Color.fromARGB(255, 150, 255, 0),
     Color.fromARGB(255, 75, 255, 0),
     Color.fromARGB(255, 0, 255, 64),
+    Color.fromARGB(255, 0, 255, 64),
   ];
 
   @override
