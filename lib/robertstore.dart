@@ -4,7 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 class Robertstore {
   void Add_entry_good_paper(String uid, String date, String thing1,
       String thing2, String thing3, int happiness) {
-    FirebaseFirestore.instance.collection(uid).doc(date).set({
+    FirebaseFirestore.instance
+      .collection("Users")
+      .doc(uid)
+      .collection("Memories")
+      .doc(date).set({
       'thing1': thing1,
       'thing2': thing2,
       'thing3': thing3,
@@ -48,7 +52,10 @@ class Robertstore {
     var user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       CollectionReference collection =
-          FirebaseFirestore.instance.collection(user.uid);
+          FirebaseFirestore.instance
+          .collection("Users")
+          .doc(user.uid)
+          .collection("Memories");
       var snapshot = await collection.get();
       List<Map<String, dynamic>> allData = snapshot.docs
           .map((doc) => doc.data() as Map<String, dynamic>)
