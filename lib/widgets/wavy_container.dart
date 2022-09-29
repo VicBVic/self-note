@@ -96,13 +96,14 @@ class WavePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     //print("hree");
     Path path = Path();
-    for (double i = 0.0; i < size.width; i++) {
+    for (double i = 0.0;; i = min(size.width, i + length / 4)) {
       path.lineTo(
           i,
           sin(((i * 2 * pi / length) +
                       (waveAnimation.value * speed) * 2 * pi)) *
                   height +
               size.height * (1 - positionPrecent));
+      if (i == size.width) break;
     }
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);

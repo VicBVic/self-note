@@ -175,21 +175,24 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
     );
 
     return Flexible(
-      fit: FlexFit.tight,
+      fit: FlexFit.loose,
       flex: 1,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: widget.forMobile ? 0 : 100.0),
         child: Stack(
+          //fit: StackFit.expand,
+
           fit: StackFit.expand,
+          alignment: Alignment.center,
           children: [
-            Container(
+            SizedBox(
               height: paperHeight,
               child: Image.asset(
                 'textures/papyrus_paper.png',
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.cover,
               ),
             ),
-            Container(
+            SizedBox(
               child: Paper(
                 onBurned: widget.onBurned,
                 anitmationDuration: Duration(seconds: 5),
@@ -198,11 +201,11 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
                 burning: widget.widget.burning,
               ),
             ),
-            Container(
+            SizedBox(
               height: paperHeight,
               child: Image.asset(
                 'textures/paper_border.png',
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
             widget.paintsWithBrush

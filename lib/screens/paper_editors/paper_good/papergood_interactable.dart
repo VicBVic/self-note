@@ -161,7 +161,7 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
                 widget.thing1.text =
                     widget.thing2.text = widget.thing3.text = "";
 
-                Scaffold.of(context).showSnackBar(snackBar);
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 print("am incercat");
               } else {
                 showDialog<void>(
