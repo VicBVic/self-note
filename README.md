@@ -1,16 +1,7 @@
-# itec20222
+# SelfNote
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Description 
+  SelfNote is the place where you can destroy all your frustrations and remember the happy times.
+  
+## Credits
+  This website was made by Botnaru Victor(me), [Acatrinei Robert-Marian](https://github.com/RobBobBot) and [Stanescu Matei-Octavian](https://github.com/OctaVianu8) in a 48h hackathon.
