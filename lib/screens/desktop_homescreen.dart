@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/auth/signin.dart';
 import 'package:itec20222/screens/good_memories.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
@@ -13,15 +14,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //var user = FirebaseAuth.instance.currentUser;
 
-class DesktopHomeScreen extends StatefulWidget {
+final StateProvider<User?> user = StateProvider((ref) => null);
+
+class DesktopHomeScreen extends ConsumerStatefulWidget {
   String title;
   DesktopHomeScreen({required this.title, Key? key}) : super(key: key);
 
   @override
-  State<DesktopHomeScreen> createState() => _DesktopHomeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DesktopHomeScreenState();
 }
 
-class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
+class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
   //bool userIsLoggedIn = user != null;
   bool isBad = true;
 
@@ -29,12 +33,12 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
     final cookie = Cookies();
     final loginInfo = await cookie.getStoredLoginInfo();
     if (loginInfo != null) {
-      print("here ${loginInfo.first}  ${loginInfo.last}");
+      //print("here ${loginInfo.first}  ${loginInfo.last}");
       signin(loginInfo.first, loginInfo.last, context).then((value) {
-        print("finished $value");
+        //print("finished $value");
         if (value == true) {
           setState(() {
-            print("bossulica fa refresh");
+            //print("bossulica fa refresh");
           });
         }
       });
@@ -50,20 +54,26 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   @override
   void initState() {
     super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      ref.read(user.notifier).state = event;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    User? u = ref.watch(user);
+
     TextStyle b1 =
         Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
-    var user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      print("yesofcors");
+
+    if (u == null) {
+      //print("yesofcors");
       autoLogIn();
     }
+
     return Scaffold(
       drawer: Drawer(
-        child: (user == null)
+        child: (u == null)
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,9 +114,9 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         ),
         actions: [
           Text(
-            user == null
+            u == null
                 ? 'You are not logged in'
-                : 'You are logged in, ${user.email}',
+                : 'You are logged in, ${u.email}',
             style: b1,
           ),
         ],

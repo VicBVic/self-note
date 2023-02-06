@@ -13,7 +13,7 @@ class SigninPage extends StatefulWidget {
 }
 
 Future<bool> signin(String email, String pass, var context) async {
-  print("signin here $email $pass");
+  //print("signin here $email $pass");
 
   String error = "";
 

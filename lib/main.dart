@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/auth/signup.dart';
 import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/screens/desktop_homescreen.dart';
@@ -9,14 +10,14 @@ import 'package:itec20222/auth/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-List<Map<String,dynamic>>? allData;
+List<Map<String, dynamic>>? allData;
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
+
+  runApp(const ProviderScope(
+    child: MyApp(),
+  ));
 }
 
 const colorScheme = ColorScheme(
@@ -39,29 +40,39 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => DesktopHomeScreen(title: 'SelfNote'),
-        '/signin': (context) => SigninPage(),
-        '/signup': (context) => SignupPage(),
-        '/memories': (context) => GoodMemos(),
-      },
-      title: 'SelfNote',
-      debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData(
-        //brightness: Brightness.dark,
-        /* dark theme settings */
-        scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
-        colorScheme: colorScheme,
-        fontFamily: "TiroDevanagariHindi",
-        textTheme: const TextTheme(
-          headline2: TextStyle(
-              //color: Colors.green,
-              ),
-        ),
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
       ),
-      themeMode: ThemeMode.dark,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            initialRoute: '/',
+            routes: {
+              '/': (context) => DesktopHomeScreen(title: 'SelfNote'),
+              '/signin': (context) => SigninPage(),
+              '/signup': (context) => SignupPage(),
+              '/memories': (context) => GoodMemos(),
+            },
+            title: 'SelfNote',
+            debugShowCheckedModeBanner: false,
+            darkTheme: ThemeData(
+              //brightness: Brightness.dark,
+              /* dark theme settings */
+              scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
+              colorScheme: colorScheme,
+              fontFamily: "TiroDevanagariHindi",
+              textTheme: const TextTheme(
+                headline2: TextStyle(
+                    //color: Colors.green,
+                    ),
+              ),
+            ),
+            themeMode: ThemeMode.dark,
+          );
+        }
+        return MaterialApp();
+      },
     );
   }
 }
