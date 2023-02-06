@@ -12,64 +12,60 @@ class SignupPage extends StatefulWidget {
   State<SignupPage> createState() => _SignupPageState();
 }
 
+Future<bool> signup(var email, var pass, var confpass, var context) async {
+  String error = "";
+
+  if (pass == confpass) {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: pass,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        error = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        error = 'The account already exists for that email.';
+      }
+    } catch (e) {
+      error = e.toString();
+    }
+  } else {
+    error = "The passwords do not match!";
+  }
+
+  if (error != "") {
+    showDialog(
+        context: context,
+        builder: (ontext) => AlertDialog(
+              title: Text("Error"),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Text(error),
+                    Text("Please try again!"),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ));
+    return false;
+  }
+  return true;
+}
+
 class _SignupPageState extends State<SignupPage> {
   TextEditingController emailcontroller = new TextEditingController();
   TextEditingController passwordcontroller = new TextEditingController();
   TextEditingController confirmpasswordcontroller = new TextEditingController();
-
-  void signup() async {
-    String email = emailcontroller.text;
-    String pass = passwordcontroller.text;
-    String confpass = confirmpasswordcontroller.text;
-    String error = "";
-
-    if (pass == confpass) {
-      try {
-        final credential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: pass,
-        );
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'weak-password') {
-          error = 'The password provided is too weak.';
-        } else if (e.code == 'email-already-in-use') {
-          error = 'The account already exists for that email.';
-        }
-      } catch (e) {
-        error = e.toString();
-      }
-    } else {
-      error = "The passwords do not match!";
-    }
-
-    if (error != "") {
-      showDialog(
-          context: context,
-          builder: (ontext) => AlertDialog(
-                title: Text("Error"),
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: [
-                      Text(error),
-                      Text("Please try again!"),
-                    ],
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    child: Text("Ok"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ));
-    } else {
-      Robertstore().Update_user_count(1);
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +115,17 @@ class _SignupPageState extends State<SignupPage> {
                 padding: EdgeInsets.only(top: 25, bottom: 25),
                 child: ElevatedButton(
                   child: Text("Sign up"),
-                  onPressed: signup,
+                  onPressed: () => signup(
+                          emailcontroller.text,
+                          passwordcontroller.text,
+                          confirmpasswordcontroller.text,
+                          context)
+                      .then((value) {
+                    if (value == true) {
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/', (route) => false);
+                    }
+                  }),
                 ),
               )
             ],

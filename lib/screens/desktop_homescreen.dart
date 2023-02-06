@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:itec20222/auth/signin.dart';
 import 'package:itec20222/screens/good_memories.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
+import 'package:itec20222/widgets/cookies.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,26 +26,29 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   bool isBad = true;
 
   void autoLogIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userId = prefs.getString('username');
-
-    if (userId != null && userId != '') {
-      setState(() {
-        // isLoggedIn = true;
-        // name = userId;
+    final cookie = Cookies();
+    final loginInfo = await cookie.getStoredLoginInfo();
+    if (loginInfo != null) {
+      print("here ${loginInfo.first}  ${loginInfo.last}");
+      signin(loginInfo.first, loginInfo.last, context).then((value) {
+        print("finished $value");
+        if (value == true) {
+          setState(() {
+            print("bossulica fa refresh");
+          });
+        }
       });
-      return;
     }
   }
 
   void logOut() async {
     FirebaseAuth.instance.signOut();
+    Cookies().deleteInfo();
     setState(() {});
   }
 
   @override
   void initState() {
-    autoLogIn();
     super.initState();
   }
 
@@ -52,6 +57,10 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
     TextStyle b1 =
         Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
     var user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("yesofcors");
+      autoLogIn();
+    }
     return Scaffold(
       drawer: Drawer(
         child: (user == null)
@@ -95,7 +104,9 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         ),
         actions: [
           Text(
-            user == null ? 'You are not logged in' : 'You are logged in',
+            user == null
+                ? 'You are not logged in'
+                : 'You are logged in, ${user.email}',
             style: b1,
           ),
         ],
