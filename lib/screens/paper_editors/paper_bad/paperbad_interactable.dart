@@ -28,10 +28,10 @@ class PaperBadInteractable extends StatefulWidget {
 class _PaperBadInteractableState extends State<PaperBadInteractable> {
   int paintsWithBrush = 0;
 
-  PainterController _controller = _newController();
+  final PainterController _controller = _newController();
 
   static PainterController _newController() {
-    PainterController controller = new PainterController();
+    PainterController controller = PainterController();
     controller.thickness = 5.0;
     controller.backgroundColor = const Color.fromARGB(0, 0, 0, 0);
     return controller;
@@ -73,8 +73,8 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                         });
                       },
                       labelType: NavigationRailLabelType.selected,
-                      destinations: [
-                        const NavigationRailDestination(
+                      destinations: const [
+                        NavigationRailDestination(
                           icon: Icon(
                             Icons.text_fields_outlined,
                           ),
@@ -82,11 +82,11 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
                             'Write Text',
                           ),
                         ),
-                        const NavigationRailDestination(
+                        NavigationRailDestination(
                           icon: Icon(
                             Icons.brush_outlined,
                           ),
-                          label: const Text(
+                          label: Text(
                             'Draw',
                           ),
                         ),
@@ -154,7 +154,7 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
     Widget theTextFieldOnPaper = Padding(
       padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 100),
       child: TextFormField(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: InputBorder.none,
         ),
         initialValue: initText,
@@ -195,7 +195,7 @@ class _DrawablePaperBadState extends State<DrawablePaperBad> {
             SizedBox(
               child: Paper(
                 onBurned: widget.onBurned,
-                anitmationDuration: Duration(seconds: 5),
+                anitmationDuration: const Duration(seconds: 5),
                 color: Colors.black,
                 pointCount: 30,
                 burning: widget.widget.burning,

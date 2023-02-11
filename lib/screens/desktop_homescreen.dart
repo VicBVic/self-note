@@ -1,20 +1,16 @@
-import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/auth/signin.dart';
-import 'package:itec20222/screens/good_memories.dart';
+import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
 import 'package:itec20222/widgets/cookies.dart';
-import 'package:itec20222/widgets/wavy_container.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 //var user = FirebaseAuth.instance.currentUser;
 
 final StateProvider<User?> user = StateProvider((ref) => null);
+final StateProvider<String?> name = StateProvider((ref) => null);
 
 class DesktopHomeScreen extends ConsumerStatefulWidget {
   String title;
@@ -34,14 +30,14 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
     final loginInfo = await cookie.getStoredLoginInfo();
     if (loginInfo != null) {
       //print("here ${loginInfo.first}  ${loginInfo.last}");
-      signin(loginInfo.first, loginInfo.last, context).then((value) {
-        //print("finished $value");
-        if (value == true) {
-          setState(() {
-            //print("bossulica fa refresh");
-          });
-        }
-      });
+      // signin(loginInfo.first, loginInfo.last, context).then((value) {
+      //   //print("finished $value");
+      //   if (value == true) {
+      //     setState(() {
+      //       //print("bossulica fa refresh");
+      //     });
+      //   }
+      // });
     }
   }
 
@@ -63,6 +59,13 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
   Widget build(BuildContext context) {
     User? u = ref.watch(user);
 
+    ref.listen<User?>(user, (previous, next) async {
+      if (next != null) {
+        ref.read(name.notifier).state =
+            await Robertstore.instance.getName(next.uid);
+      }
+    });
+
     TextStyle b1 =
         Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
 
@@ -82,13 +85,13 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, '/signup');
                     },
-                    child: Text('Sign up'),
+                    child: const Text('Sign up'),
                   ),
                   TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/signin');
                     },
-                    child: Text('Sign in'),
+                    child: const Text('Sign in'),
                   ),
                 ],
               )
@@ -97,12 +100,12 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   TextButton(
-                    child: Text('Memories'),
+                    child: const Text('Memories'),
                     onPressed: () {
                       Navigator.pushNamed(context, '/memories');
                     },
                   ),
-                  TextButton(onPressed: logOut, child: Text('Sign out')),
+                  TextButton(onPressed: logOut, child: const Text('Sign out')),
                 ],
               ),
       ),
@@ -116,7 +119,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
           Text(
             u == null
                 ? 'You are not logged in'
-                : 'You are logged in, ${u.email}',
+                : 'You are logged in ${ref.watch(name) != null ? ", ${ref.watch(name)}" : ""}',
             style: b1,
           ),
         ],

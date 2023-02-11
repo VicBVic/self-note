@@ -1,16 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:itec20222/consts.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
-import 'package:itec20222/widgets/footer.dart';
 import 'package:itec20222/widgets/paragraph-provider.dart';
-import 'package:itec20222/widgets/wavy_container.dart';
 
 class PaperBad extends StatefulWidget {
   const PaperBad({
@@ -38,24 +33,23 @@ class _PaperBadState extends State<PaperBad> {
   @override
   Widget build(BuildContext context) {
     TextStyle h1 = Theme.of(context).textTheme.headline2!.copyWith(
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-      );
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        );
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-            Center
-            (
+            Center(
               child: Text(
-              'Write your negative thoughts on the paper below:',
-              style: h1,
+                'Write your negative thoughts on the paper below:',
+                style: h1,
               ),
             ),
             AnimatedOpacity(
-              duration: Duration(seconds: 2),
+              duration: const Duration(seconds: 2),
               opacity: editorOp,
               child: PaperBadInteractable(
                 onBurned: widget.onBurned,
@@ -95,9 +89,9 @@ class _PaperBadState extends State<PaperBad> {
   void initState() {
     editorOp = 0.0;
     loadDesc();
-    Future.delayed(Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 300), () {
       editorOp = 1;
-    }).then((value) => print(value));
+    }).then((value) => {} /*print(value)*/);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         editorOp = 1;

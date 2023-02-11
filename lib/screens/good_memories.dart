@@ -1,7 +1,3 @@
-//import 'dart:html';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/widgets/good_memory_card.dart';
@@ -22,7 +18,7 @@ class _GoodMemosState extends State<GoodMemos> {
     //print(mem);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Good Memories'),
+        title: const Text('Good Memories'),
       ),
       body: FutureBuilder(
           future: Robertstore().fetchMemories(),
@@ -38,7 +34,7 @@ class _GoodMemosState extends State<GoodMemos> {
                   things: s[index],
                 );
               },
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 3),
             );
           }),

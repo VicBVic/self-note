@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/auth/signup.dart';
-import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/screens/desktop_homescreen.dart';
 import 'package:itec20222/screens/good_memories.dart';
-import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
-import 'package:itec20222/screens/myhomepage.dart';
 import 'package:itec20222/auth/signin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -50,8 +47,8 @@ class MyApp extends StatelessWidget {
             initialRoute: '/',
             routes: {
               '/': (context) => DesktopHomeScreen(title: 'SelfNote'),
-              '/signin': (context) => SigninPage(),
-              '/signup': (context) => SignupPage(),
+              '/signin': (context) => const SigninPage(),
+              '/signup': (context) => const SignupPage(),
               '/memories': (context) => GoodMemos(),
             },
             title: 'SelfNote',
@@ -71,7 +68,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.dark,
           );
         }
-        return MaterialApp();
+        return const MaterialApp();
       },
     );
   }

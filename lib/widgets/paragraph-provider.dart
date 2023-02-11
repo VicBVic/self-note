@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/main.dart';
 import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/widgets/wavy_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ParagraphProvider extends StatefulWidget {
+final StateProvider<int> userCount = StateProvider((ref) => 0);
+final StateProvider<int> writes = StateProvider((ref) => 0);
+
+class ParagraphProvider extends ConsumerStatefulWidget {
   final Map? data;
   final double? waveHeight;
   final double? waveLength;
@@ -14,22 +18,24 @@ class ParagraphProvider extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ParagraphProvider> createState() => _ParagraphProviderState();
+  ConsumerState<ParagraphProvider> createState() => _ParagraphProviderState();
 }
 
-class _ParagraphProviderState extends State<ParagraphProvider> {
-  String users = "0";
+class _ParagraphProviderState extends ConsumerState<ParagraphProvider> {
+  void getCountData() async {
+    ref.read(userCount.notifier).state =
+        await Robertstore.instance.getUserCount();
+  }
 
-  void getData(int u) {
-    setState(() {
-      users = u.toString();
-    });
+  void getWrites() async {
+    ref.read(writes.notifier).state = await Robertstore.instance.getWrites();
   }
 
   @override
   void initState() {
     super.initState();
-    Robertstore().Get_user_count().then((value) => getData(value!));
+    getCountData();
+    getWrites();
   }
 
   @override
@@ -135,14 +141,14 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                       child: Text(
-                        '285 Users wrote their selfnotes today.',
+                        '${ref.watch(writes)} Users wrote their selfnotes today.',
                         style: b1,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                       child: Text(
-                        'A total of $users people signed up for selfnote.',
+                        'A total of ${ref.watch(userCount)} people signed up for selfnote.',
                         style: b1,
                       ),
                     ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/papergood_interactable.dart';
 import 'package:itec20222/widgets/paragraph-provider.dart';
-import 'package:itec20222/widgets/wavy_container.dart';
 
 class PaperGood extends StatefulWidget {
   const PaperGood({
@@ -39,7 +38,7 @@ class _PaperGoodState extends State<PaperGood> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(64, 16, 0, 32),
+                padding: const EdgeInsets.fromLTRB(64, 16, 0, 32),
                 child: Text(
                   'Not all is lightless still.',
                   style: h1.copyWith(
