@@ -1,16 +1,20 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/auth/signin.dart';
 import 'package:itec20222/robertstore.dart';
-import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
-import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
+import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad_menu.dart';
+import 'package:itec20222/screens/paper_editors/paper_good/paper_good_menu.dart';
+import 'package:itec20222/widgets/badgood_controller.dart';
 import 'package:itec20222/widgets/cookies.dart';
+import 'package:itec20222/widgets/homescreen_drawer.dart';
 
 //var user = FirebaseAuth.instance.currentUser;
 
-final StateProvider<User?> user = StateProvider((ref) => null);
-final StateProvider<String?> name = StateProvider((ref) => null);
+final StateProvider<User?> userProvider = StateProvider((ref) => null);
+final StateProvider<String?> nameProvider = StateProvider((ref) => null);
 
 class DesktopHomeScreen extends ConsumerStatefulWidget {
   String title;
@@ -22,46 +26,38 @@ class DesktopHomeScreen extends ConsumerStatefulWidget {
 }
 
 class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
-  //bool userIsLoggedIn = user != null;
+  BadgoodController badgoodController = BadgoodController();
+
   bool isBad = true;
 
   void autoLogIn() async {
     final cookie = Cookies();
     final loginInfo = await cookie.getStoredLoginInfo();
-    if (loginInfo != null) {
-      //print("here ${loginInfo.first}  ${loginInfo.last}");
-      // signin(loginInfo.first, loginInfo.last, context).then((value) {
-      //   //print("finished $value");
-      //   if (value == true) {
-      //     setState(() {
-      //       //print("bossulica fa refresh");
-      //     });
-      //   }
-      // });
-    }
   }
 
-  void logOut() async {
+  Future<void> logOut() async {
     FirebaseAuth.instance.signOut();
     Cookies().deleteInfo();
-    setState(() {});
   }
 
   @override
   void initState() {
+    badgoodController.addListener(() {
+      setState(() {});
+    });
     super.initState();
     FirebaseAuth.instance.authStateChanges().listen((event) {
-      ref.read(user.notifier).state = event;
+      ref.read(userProvider.notifier).state = event;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    User? u = ref.watch(user);
+    User? currentlyLoggedUser = ref.watch(userProvider);
 
-    ref.listen<User?>(user, (previous, next) async {
+    ref.listen<User?>(userProvider, (previous, next) async {
       if (next != null) {
-        ref.read(name.notifier).state =
+        ref.read(nameProvider.notifier).state =
             await Robertstore.instance.getName(next.uid);
       }
     });
@@ -69,45 +65,15 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
     TextStyle b1 =
         Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
 
-    if (u == null) {
+    if (currentlyLoggedUser == null) {
       //print("yesofcors");
       autoLogIn();
     }
 
     return Scaffold(
-      drawer: Drawer(
-        child: (u == null)
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                    child: const Text('Sign up'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signin');
-                    },
-                    child: const Text('Sign in'),
-                  ),
-                ],
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton(
-                    child: const Text('Memories'),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/memories');
-                    },
-                  ),
-                  TextButton(onPressed: logOut, child: const Text('Sign out')),
-                ],
-              ),
+      drawer: HomescreenDrawer(
+        user: currentlyLoggedUser,
+        logout: logOut,
       ),
       appBar: AppBar(
         title: Text(
@@ -117,29 +83,22 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
         ),
         actions: [
           Text(
-            u == null
+            currentlyLoggedUser == null
                 ? 'You are not logged in'
-                : 'You are logged in ${ref.watch(name) != null ? ", ${ref.watch(name)}" : ""}',
+                : 'You are logged in ${ref.watch(nameProvider) != null ? ", ${ref.watch(nameProvider)}" : ""}',
             style: b1,
           ),
         ],
       ),
-      body: ListView(
-        children: [
-          AnimatedCrossFade(
-            duration: const Duration(seconds: 5),
-            firstChild: PaperGood(),
-            secondChild: PaperBad(
-              onBurned: () {
-                setState(() {
-                  isBad = false;
-                });
-              },
-            ),
-            crossFadeState:
-                isBad ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-          ),
-        ],
+      body: AnimatedCrossFade(
+        duration: const Duration(seconds: 1),
+        firstChild: PaperGood(),
+        secondChild: PaperBadMenu(
+          badgoodController: badgoodController,
+        ),
+        crossFadeState: badgoodController.isBad
+            ? CrossFadeState.showSecond
+            : CrossFadeState.showFirst,
       ),
     );
   }

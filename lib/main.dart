@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return MaterialApp(
-            initialRoute: '/',
+            initialRoute: '/home',
             routes: {
-              '/': (context) => DesktopHomeScreen(title: 'SelfNote'),
+              '/home': (context) => DesktopHomeScreen(title: 'SelfNote'),
               '/signin': (context) => const SigninPage(),
               '/signup': (context) => const SignupPage(),
               '/memories': (context) => GoodMemos(),

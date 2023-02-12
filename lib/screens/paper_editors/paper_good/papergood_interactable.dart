@@ -36,56 +36,21 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     user = FirebaseAuth.instance.currentUser;
-    var b1 = Theme.of(context).textTheme.headline3!.copyWith(
+    var b1 = Theme.of(context).textTheme.displaySmall!.copyWith(
         color: Colors.black, fontWeight: FontWeight.w800, fontSize: 24);
     var b2 =
-        Theme.of(context).textTheme.headline6!.copyWith(color: Colors.black);
+        Theme.of(context).textTheme.titleLarge!.copyWith(color: Colors.black);
     var snackBar = const SnackBar(
       behavior: SnackBarBehavior.floating,
       content: Text('Saved to your memories!'),
     );
-    InputDecoration dec = const InputDecoration(
+    var dec = const InputDecoration(
       contentPadding: null,
       prefixIcon: Icon(Icons.circle),
       prefixIconColor: Colors.green,
       border: OutlineInputBorder(borderSide: BorderSide.none),
     );
-    final AlertDialog dialog = AlertDialog(
-      title: const Text('Warning'),
-      contentPadding: const EdgeInsets.all(8),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text('You need to be logged in to save your memories!'),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/signup');
-                },
-                child: const Text(
-                  'Register',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/signin');
-                },
-                child: const Text(
-                  'Log in',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    var notLoggedInAlert = NotLoggedInAlert();
     return Column(
       children: [
         Container(
@@ -165,7 +130,7 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
                 print("am incercat");
               } else {
                 showDialog<void>(
-                    context: context, builder: (context) => dialog);
+                    context: context, builder: (context) => notLoggedInAlert);
               }
             },
             child: Padding(
@@ -181,6 +146,50 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class NotLoggedInAlert extends AlertDialog {
+  const NotLoggedInAlert({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Warning'),
+      contentPadding: const EdgeInsets.all(8),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text('You need to be logged in to save your memories!'),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signup');
+                },
+                child: const Text(
+                  'Register',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/signin');
+                },
+                child: const Text(
+                  'Log in',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

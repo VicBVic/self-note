@@ -6,13 +6,13 @@ class ColorPickerButton extends StatefulWidget {
   final PainterController _controller;
   final bool _background;
 
-  ColorPickerButton(this._controller, this._background);
+  const ColorPickerButton(this._controller, this._background, {super.key});
 
   @override
-  _ColorPickerButtonState createState() => new _ColorPickerButtonState();
+  ColorPickerButtonState createState() => ColorPickerButtonState();
 }
 
-class _ColorPickerButtonState extends State<ColorPickerButton> {
+class ColorPickerButtonState extends State<ColorPickerButton> {
   @override
   Widget build(BuildContext context) {
     return Stack(

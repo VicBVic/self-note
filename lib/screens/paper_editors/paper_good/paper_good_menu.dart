@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -32,31 +33,33 @@ class _PaperGoodState extends State<PaperGood> {
     TextStyle h1 = Theme.of(context).textTheme.headline2!;
     TextStyle b1 = Theme.of(context).textTheme.bodyLarge!;
 
-    return Container(
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(64, 16, 0, 32),
-                child: Text(
-                  'Not all is lightless still.',
-                  style: h1.copyWith(
-                      //decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+    return SingleChildScrollView(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(64, 16, 0, 32),
+                  child: Text(
+                    'Not all is lightless still.',
+                    style: h1.copyWith(
+                        //decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 0, 32),
-                child: Text(
-                    'Try and write down three things that made you happy troughout the day. Search in your memory thouroughly.',
-                    style: b1.copyWith(
-                        fontSize: 22.0, height: 1, color: Colors.black)),
-              ),
-              PG,
-            ] +
-            desc,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 0, 32),
+                  child: Text(
+                      'Try and write down three things that made you happy troughout the day. Search in your memory thouroughly.',
+                      style: b1.copyWith(
+                          fontSize: 22.0, height: 1, color: Colors.black)),
+                ),
+                PG,
+              ] +
+              desc,
+        ),
       ),
     );
   }

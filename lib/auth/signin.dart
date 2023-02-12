@@ -79,6 +79,7 @@ class _SigninPageState extends State<SigninPage> {
                 padding: const EdgeInsets.only(top: 25, bottom: 25),
                 child: TextFormField(
                   controller: emailcontroller,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                       icon: Icon(Icons.email_outlined), labelText: "Email"),
                 ),
@@ -87,6 +88,7 @@ class _SigninPageState extends State<SigninPage> {
                 padding: const EdgeInsets.only(top: 25, bottom: 25),
                 child: TextFormField(
                   controller: passwordcontroller,
+                  textInputAction: TextInputAction.done,
                   obscureText: true,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.key),
@@ -105,7 +107,7 @@ class _SigninPageState extends State<SigninPage> {
                       //print("here");
                       if (value == true) {
                         Navigator.of(context)
-                            .pushNamedAndRemoveUntil('/', (route) => false);
+                            .pushNamedAndRemoveUntil('/home', (route) => false);
                       }
                     });
                     //Navigator.pop(context);

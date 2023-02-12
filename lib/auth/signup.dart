@@ -95,6 +95,7 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 25),
                 child: TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: fnamecontroller,
                   decoration: const InputDecoration(
                       icon: Icon(Icons.person), labelText: "First name"),
@@ -103,6 +104,7 @@ class _SignupPageState extends State<SignupPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 25),
                 child: TextFormField(
+                  textInputAction: TextInputAction.next,
                   controller: lnamecontroller,
                   decoration: const InputDecoration(
                       icon: Icon(Icons.person), labelText: "Last name"),
@@ -112,6 +114,7 @@ class _SignupPageState extends State<SignupPage> {
                 padding: const EdgeInsets.only(top: 25, bottom: 25),
                 child: TextFormField(
                   controller: emailcontroller,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                       icon: Icon(Icons.email_outlined), labelText: "Email"),
                 ),
@@ -121,6 +124,7 @@ class _SignupPageState extends State<SignupPage> {
                 child: TextFormField(
                   controller: passwordcontroller,
                   obscureText: true,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.key),
                     labelText: "Password",
@@ -132,6 +136,7 @@ class _SignupPageState extends State<SignupPage> {
                 child: TextFormField(
                   controller: confirmpasswordcontroller,
                   obscureText: true,
+                  textInputAction: TextInputAction.done,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.key),
                     labelText: "Confirm password",
@@ -152,7 +157,7 @@ class _SignupPageState extends State<SignupPage> {
                       .then((value) {
                     if (value == true) {
                       Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/', (route) => false);
+                          .pushNamedAndRemoveUntil('/home', (route) => false);
                     }
                   }),
                 ),
