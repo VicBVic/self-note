@@ -30,14 +30,8 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
 
   bool isBad = true;
 
-  void autoLogIn() async {
-    final cookie = Cookies();
-    final loginInfo = await cookie.getStoredLoginInfo();
-  }
-
   Future<void> logOut() async {
     FirebaseAuth.instance.signOut();
-    Cookies().deleteInfo();
   }
 
   @override
@@ -64,11 +58,6 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
 
     TextStyle b1 =
         Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
-
-    if (currentlyLoggedUser == null) {
-      //print("yesofcors");
-      autoLogIn();
-    }
 
     return Scaffold(
       drawer: HomescreenDrawer(
