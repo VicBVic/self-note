@@ -53,6 +53,8 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
       if (next != null) {
         ref.read(nameProvider.notifier).state =
             await Robertstore.instance.getName(next.uid);
+      } else {
+        ref.read(nameProvider.notifier).state = null;
       }
     });
 
@@ -74,7 +76,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
           Text(
             currentlyLoggedUser == null
                 ? 'You are not logged in'
-                : 'You are logged in ${ref.watch(nameProvider) != null ? ", ${ref.watch(nameProvider)}" : ""}',
+                : 'You are logged in${ref.watch(nameProvider) != null ? ", ${ref.watch(nameProvider)}" : ""}',
             style: b1,
           ),
         ],
