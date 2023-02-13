@@ -37,7 +37,7 @@ class PaperbadPaperstack extends StatelessWidget {
         SizedBox(
           height: paperHeight,
           child: Image.asset(
-            'textures/paper_border.png',
+            'assets/textures/paper_border.png',
             fit: BoxFit.cover,
           ),
         ),

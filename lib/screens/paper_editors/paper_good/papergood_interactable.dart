@@ -50,7 +50,7 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
       prefixIconColor: Colors.green,
       border: OutlineInputBorder(borderSide: BorderSide.none),
     );
-    var notLoggedInAlert = NotLoggedInAlert();
+    var notLoggedInAlert = const NotLoggedInAlert();
     return Column(
       children: [
         Container(
@@ -60,7 +60,7 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
             fit: StackFit.expand,
             children: [
               Image.asset(
-                'textures/my-papyrus.png',
+                'assets/textures/my-papyrus.png',
                 fit: BoxFit.fill,
               ),
               Form(

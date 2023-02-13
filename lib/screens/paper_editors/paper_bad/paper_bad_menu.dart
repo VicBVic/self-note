@@ -101,7 +101,7 @@ class _PaperBadMenuState extends State<PaperBadMenu>
 
   void loadDesc() async {
     //print("yep");
-    await rootBundle.loadString('pagebad.json').then((value) {
+    await rootBundle.loadString('jsons/pagebad.json').then((value) {
       setState(() {
         const double defHeight = 50;
         var serialized = jsonDecode(value);

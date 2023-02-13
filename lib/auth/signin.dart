@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:itec20222/widgets/cookies.dart';
+//import 'package:itec20222/widgets/cookies.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SigninPage extends StatefulWidget {
@@ -51,9 +51,9 @@ Future<bool> signin(String email, String pass, var context) async {
             ));
     return false;
   }
-  var cookie = Cookies();
+  //var cookie = Cookies();
   //print("here bossulica");
-  cookie.setStoredLoginInfo([email, pass]);
+  //cookie.setStoredLoginInfo([email, pass]);
   return true;
 }
 

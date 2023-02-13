@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -71,7 +70,7 @@ class _PaperGoodState extends State<PaperGood> {
 
   void loadDesc() async {
     //print("yep");
-    await rootBundle.loadString('pagebad.json').then((value) {
+    await rootBundle.loadString('jsons/pagebad.json').then((value) {
       TextStyle h1 = Theme.of(context).textTheme.headline2!.copyWith(
           decoration: TextDecoration.underline,
           fontWeight: FontWeight.bold,

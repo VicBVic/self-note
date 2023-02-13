@@ -8,7 +8,7 @@ import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad_menu.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/paper_good_menu.dart';
 import 'package:itec20222/widgets/badgood_controller.dart';
-import 'package:itec20222/widgets/cookies.dart';
+//import 'package:itec20222/widgets/cookies.dart';
 import 'package:itec20222/widgets/homescreen_drawer.dart';
 
 //var user = FirebaseAuth.instance.currentUser;
