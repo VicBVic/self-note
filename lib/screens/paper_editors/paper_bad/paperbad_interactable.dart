@@ -13,11 +13,9 @@ import 'package:painter/painter.dart';
 import 'drawable_paperbad.dart';
 
 class PaperBadInteractable extends StatefulWidget {
-  final double? paperHeight;
   final AnimationController animationController;
   PaperBadInteractable({
     Key? key,
-    this.paperHeight = 750,
     required this.forMobile,
     required this.animationController,
   }) : super(key: key);
@@ -45,22 +43,25 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
     {
       return Container(
         padding: const EdgeInsets.all(20),
-        height: widget.paperHeight,
         child: Row(
           children: [
-            DrawablePaperBad(
-              paintsWithBrush: (paintsWithBrush == 1),
-              widget: widget,
-              controller: _controller,
-              forMobile: widget.forMobile,
-              animationController: widget.animationController,
+            Flexible(
+              child: DrawablePaperBad(
+                paintsWithBrush: (paintsWithBrush == 1),
+                controller: _controller,
+                forMobile: widget.forMobile,
+                animationController: widget.animationController,
+              ),
             ),
-            PaperbadInteractableRail(
-                onDestinationSelected: (index) => setState(() {
-                      paintsWithBrush = index;
-                    }),
-                selectedIndex: paintsWithBrush,
-                controller: _controller)
+            Align(
+              alignment: Alignment.centerRight,
+              child: PaperbadInteractableRail(
+                  onDestinationSelected: (index) => setState(() {
+                        paintsWithBrush = index;
+                      }),
+                  selectedIndex: paintsWithBrush,
+                  controller: _controller),
+            )
           ],
         ),
       );

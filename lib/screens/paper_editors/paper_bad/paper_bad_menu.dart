@@ -4,8 +4,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
+import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_utility.dart';
 import 'package:itec20222/widgets/badgood_controller.dart';
+import 'package:itec20222/widgets/expander_sliver.dart';
 import 'package:itec20222/widgets/paragraph-provider.dart';
+import 'package:itec20222/animations/animated_wavy_container.dart';
 
 class PaperBadMenu extends StatefulWidget {
   const PaperBadMenu({
@@ -29,6 +32,7 @@ class _PaperBadMenuState extends State<PaperBadMenu>
   double editorOp = 1.0;
   List<Widget> desc = [];
   StreamController<bool> streamController = StreamController<bool>();
+  ScrollController scrollController = ScrollController();
   late AnimationController animationController =
       AnimationController(vsync: this, duration: const Duration(seconds: 5));
 
@@ -59,62 +63,39 @@ class _PaperBadMenuState extends State<PaperBadMenu>
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-              Center(
-                child: Text(
-                  'Write your negative thoughts on the paper below:',
-                  style: h1,
+    return CustomScrollView(
+      //shrinkWrap: true,
+      controller: scrollController,
+      slivers: <Widget>[
+            SliverFillViewport(
+              delegate: SliverChildListDelegate([
+                PaperbadUtility(
+                  animationController: animationController,
+                  scrollController: scrollController,
                 ),
-              ),
-              PaperBadInteractable(
-                animationController: animationController,
-                forMobile: (screenHeight > screenWidth),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 300.0, vertical: 20.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    animationController.forward();
-                    //widget.badgoodController.setIsBad(false);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Burn',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineMedium!
-                          .copyWith(color: Colors.black),
-                    ),
-                  ),
-                ),
-              ),
-            ] +
-            desc,
-      ),
+              ]),
+            )
+          ] +
+          desc,
     );
   }
 
   void loadDesc() async {
     //print("yep");
+    int count = 0;
     await rootBundle.loadString('pagebad.json').then((value) {
       setState(() {
-        const double defHeight = 50;
         var serialized = jsonDecode(value);
-        desc.add(Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: ((widget.paragraphWaveHeight ?? defHeight) + 8))));
-        //print(serialized);
         for (var paragraph in serialized) {
-          desc.add(ParagraphProvider(
-            data: paragraph,
-            waveHeight: widget.paragraphWaveHeight,
-            waveLength: widget.paragraphWaveLength,
-            waveSpeed: widget.paragraphWaveSpeed,
+          var argb = paragraph['Color'];
+          count++;
+          desc.add(ParallaxSliver(
+            child: AnimatedWavyContainer(
+              color: Color.fromARGB(argb[0], argb[1], argb[2], argb[3]),
+              child: ParagraphProvider(
+                data: paragraph,
+              ),
+            ),
           ));
         }
       });

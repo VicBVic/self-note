@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'cookies.dart';
-
 class HomescreenDrawer extends StatelessWidget {
   final User? user;
   final Future<void> Function() logout;
