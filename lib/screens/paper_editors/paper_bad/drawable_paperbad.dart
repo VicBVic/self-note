@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:itec20222/screens/paper_editors/paper.dart';
+import 'package:itec20222/screens/paper_editors/burnable_paper.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
-import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_paperstack.dart';
 import 'package:painter/painter.dart';
 
 import '../../../consts.dart';

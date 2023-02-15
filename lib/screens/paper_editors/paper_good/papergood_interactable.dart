@@ -5,7 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:itec20222/consts.dart';
 import 'package:itec20222/robertstore.dart';
-import 'package:itec20222/screens/paper_editors/paper.dart';
+import 'package:itec20222/screens/paper_editors/burnable_paper.dart';
 import 'package:itec20222/classes/color_picker_button.dart';
 import 'package:painter/painter.dart';
 

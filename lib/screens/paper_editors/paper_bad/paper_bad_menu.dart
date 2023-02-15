@@ -6,9 +6,10 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_utility.dart';
 import 'package:itec20222/widgets/badgood_controller.dart';
-import 'package:itec20222/widgets/expander_sliver.dart';
 import 'package:itec20222/widgets/paragraph-provider.dart';
 import 'package:itec20222/animations/animated_wavy_container.dart';
+
+import '../../../widgets/parallax_sliver.dart';
 
 class PaperBadMenu extends StatefulWidget {
   const PaperBadMenu({
@@ -64,20 +65,19 @@ class _PaperBadMenuState extends State<PaperBadMenu>
     double screenHeight = MediaQuery.of(context).size.height;
 
     return CustomScrollView(
-      //shrinkWrap: true,
-      controller: scrollController,
-      slivers: <Widget>[
-            SliverFillViewport(
-              delegate: SliverChildListDelegate([
-                PaperbadUtility(
-                  animationController: animationController,
-                  scrollController: scrollController,
-                ),
-              ]),
-            )
-          ] +
-          desc,
-    );
+        //shrinkWrap: true,
+        controller: scrollController,
+        slivers: <Widget>[
+              SliverFillViewport(
+                delegate: SliverChildListDelegate(<Widget>[
+                  PaperbadUtility(
+                    animationController: animationController,
+                    scrollController: scrollController,
+                  ),
+                ]),
+              ),
+            ] +
+            desc);
   }
 
   void loadDesc() async {
