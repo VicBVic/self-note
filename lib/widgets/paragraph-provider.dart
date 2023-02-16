@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 final StateProvider<int> userCount = StateProvider((ref) => 0);
 final StateProvider<int> writes = StateProvider((ref) => 0);
+final StateProvider<int> totalWrites = StateProvider((ref) => 0);
 
 class ParagraphProvider extends ConsumerStatefulWidget {
   final Map? data;
@@ -30,19 +31,22 @@ class _ParagraphProviderState extends ConsumerState<ParagraphProvider> {
     ref.read(writes.notifier).state = await Robertstore.instance.getWrites();
   }
 
+  void getTotalWrites() async {
+    ref.read(totalWrites.notifier).state =
+        await Robertstore.instance.getTotalWrites();
+  }
+
   @override
   void initState() {
     super.initState();
     getCountData();
     getWrites();
+    getTotalWrites();
   }
 
   @override
   Widget build(BuildContext context) {
-    return decodeData(widget.data);
-  }
-
-  Widget decodeData(Map? data) {
+    //return decodeData(widget.data);
     bool isMobile =
         MediaQuery.of(context).size.width < MediaQuery.of(context).size.height;
     const double defHeight = 100;
@@ -138,7 +142,7 @@ class _ParagraphProviderState extends ConsumerState<ParagraphProvider> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                   child: Text(
-                    'A total of {memoryCount} memories have been written.',
+                    'A total of ${ref.watch(totalWrites)} memories have been written.',
                     style: b1,
                   ),
                 ),

@@ -95,4 +95,14 @@ class Robertstore {
       }
     ];
   }
+
+  Future<int> getTotalWrites() async {
+    int res = 0;
+    await FirebaseFirestore.instance.collection("Memories").get().then((value) {
+      for (var doc in value.docs) {
+        res += doc.data()["count"] as int;
+      }
+    });
+    return res;
+  }
 }
