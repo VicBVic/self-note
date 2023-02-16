@@ -27,6 +27,8 @@ class DesktopHomeScreen extends ConsumerStatefulWidget {
 
 class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
   BadgoodController badgoodController = BadgoodController();
+  String? username;
+  User? currentlyLoggedUser;
 
   Future<void> logOut() async {
     FirebaseAuth.instance.signOut();
@@ -39,23 +41,24 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
     });
     super.initState();
     // print("yeah here ${userProvider.notifier}");
-    FirebaseAuth.instance.authStateChanges().listen((event) {
-      ref.read(userProvider.notifier);
+    FirebaseAuth.instance.authStateChanges().listen((event) async {
+      //ref.read(userProvider);
+      currentlyLoggedUser = event;
+      if (currentlyLoggedUser != null)
+        username = await Robertstore.instance.getName(currentlyLoggedUser!.uid);
+      setState(() {});
+      print("here");
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    User? currentlyLoggedUser = ref.watch(userProvider);
-
-    ref.listen<User?>(userProvider, (previous, next) async {
-      if (next != null) {
-        ref.read(nameProvider.notifier).state =
-            await Robertstore.instance.getName(next.uid);
-      } else {
-        ref.read(nameProvider.notifier).state = null;
-      }
-    });
+    // ref.listen<User?>(userProvider, (previous, next) async {
+    //   } else {
+    //     ref.read(nameProvider.notifier).state = null;
+    //   }
+    // });
+    // print("yes ${ref.watch(nameProvider)}");
 
     TextStyle b1 =
         Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
@@ -75,7 +78,7 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
           Text(
             currentlyLoggedUser == null
                 ? 'You are not logged in'
-                : 'You are logged in${ref.watch(nameProvider) != null ? ", ${ref.watch(nameProvider)}" : ""}',
+                : 'You are logged in, ${username ?? "Missingno"}!',
             style: b1,
           ),
         ],
