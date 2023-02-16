@@ -39,8 +39,8 @@ class ParallaxSliverRenderer extends RenderSliverSingleBoxAdapter {
       //scrollOffsetCorrection: 50.0,
       //paintOrigin: -paintedChildSize,
       layoutExtent: max(0, paintedChildSize - overextend),
-      hasVisualOverflow: childExtent > constraints.remainingPaintExtent ||
-          constraints.scrollOffset > 0.0,
+      // hasVisualOverflow: childExtent > constraints.remainingPaintExtent ||
+      //     constraints.scrollOffset > 0.0,
     );
 
     setChildParentData(child!, constraints, geometry!);

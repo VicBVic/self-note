@@ -17,7 +17,7 @@ class AnimatedWavyContainer extends StatefulWidget {
     this.child,
     this.color,
     this.waveLength = 400,
-    this.waveSpeed = 0.5,
+    this.waveSpeed = 1,
     this.waveHeight = 50,
   }) : super(key: key);
 
@@ -110,13 +110,15 @@ class ClipperWave extends CustomClipper<Path> {
 
     path.lineTo(size.width, 0);
     //path.lineTo(0, size.height);
-    for (int i = pointCount - 1; i >= 0; i--) {
-      double realValue = value;
-      realValue += offsets[i];
-      if (realValue > 1) realValue -= 1;
-      realValue = min(realValue, 1 - realValue) * 2;
-      path.lineTo(size.width * i / (pointCount - 1),
-          pointCurves[i].transform(realValue) * height + size.height - height);
+    for (double i = size.width;; i = max(0, i - length / 4)) {
+      path.lineTo(
+          i,
+          sin(((i * 2 * pi / length) +
+                      (waveAnimation.value * speed) * 2 * pi)) *
+                  height +
+              size.height -
+              height);
+      if (i == 0) break;
     }
     return path;
   }

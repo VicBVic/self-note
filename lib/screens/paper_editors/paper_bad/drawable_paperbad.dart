@@ -25,7 +25,7 @@ class DrawablePaperBad extends StatefulWidget {
 
 class _DrawablePaperBadState extends State<DrawablePaperBad> {
   TextEditingController textController =
-      TextEditingController(text: 'start typing here...');
+      TextEditingController(text: '\n\n\n\nstart typing here...');
 
   @override
   void dispose() {
@@ -64,6 +64,7 @@ class TextFieldOnPaper extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       textAlign: TextAlign.center,
+      textAlignVertical: TextAlignVertical.bottom,
       controller: controller,
       decoration: const InputDecoration(
         border: InputBorder.none,

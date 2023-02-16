@@ -17,7 +17,7 @@ class ZaggyCurve extends Curve {
 
   @override
   double transform(double t) {
-    return mainTransform(t * (frequency + t * t) * 2 * pi) /
-        ((frequency + t * t) * 2 * pi);
+    return mainTransform(t * (frequency * (1) + t) * 2 * pi) /
+        ((frequency * (1) + t) * 2 * pi);
   }
 }

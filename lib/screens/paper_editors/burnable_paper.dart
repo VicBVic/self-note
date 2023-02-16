@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:itec20222/animations/easer_curve.dart';
 import 'package:itec20222/consts.dart';
 import 'package:painter/painter.dart';
 
@@ -23,29 +24,36 @@ class BurnablePaper extends StatefulWidget {
 
 class _BurnablePaperState extends State<BurnablePaper> {
   late List<Curve> pointCurves;
-  double op = 0;
+  late List<Curve> backCurves;
+  double op = 1;
+
+  void animationListener() {
+    setState(() {});
+  }
 
   @override
   void initState() {
-    pointCurves = List.generate(BurnablePaper.pointCount,
-        (ix) => ZaggyCurve(globalRng.nextInt(8).toDouble() + 5));
-    widget.animationController.addListener(
-      () => setState(() {}),
-    );
-    //print(widget.burning);
-    Future.delayed(Duration(milliseconds: 500)).then((value) => setState(() {
-          op = 1;
-        }));
+    backCurves = List.generate(
+        BurnablePaper.pointCount,
+        (ix) => ZaggyCurve(
+              globalRng.nextInt(16).toDouble() + 1,
+            ));
+    pointCurves = backCurves.map((e) => EaseAnotherCurve(e)).toList();
+    widget.animationController.addListener(animationListener);
     super.initState();
+    //print(widget.burning);
   }
 
   @override
   void dispose() {
+    widget.animationController.removeListener(animationListener);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile =
+        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height;
     return AnimatedOpacity(
       duration: Duration(seconds: 3),
       opacity: op,
@@ -54,18 +62,18 @@ class _BurnablePaperState extends State<BurnablePaper> {
         children: [
           ClipPath(
             clipper: ClipperPaperBurn(
-                delay: 0.1,
-                pointCurves: pointCurves,
+                pointCurves: backCurves,
                 animation: CurvedAnimation(
                     parent: widget.animationController, curve: Curves.easeIn),
                 pointCount: BurnablePaper.pointCount),
-            child: Container(
-              color: Colors.orange,
+            child: Image.asset(
+              'assets/textures/dummy-no-royalty.jpg',
+              color: Colors.amber,
+              fit: BoxFit.cover,
             ),
           ),
           ClipPath(
             clipper: ClipperPaperBurn(
-                delay: 0,
                 pointCurves: pointCurves,
                 animation: CurvedAnimation(
                     parent: widget.animationController, curve: Curves.easeIn),
@@ -77,7 +85,7 @@ class _BurnablePaperState extends State<BurnablePaper> {
           ),
           Image.asset(
             'assets/textures/paper_border.png',
-            fit: BoxFit.cover,
+            fit: isMobile ? BoxFit.cover : BoxFit.cover,
           ),
         ],
       ),
@@ -88,11 +96,9 @@ class _BurnablePaperState extends State<BurnablePaper> {
 class ClipperPaperBurn extends CustomClipper<Path> {
   final Animation animation;
   final int pointCount;
-  final double delay;
   final List<Curve> pointCurves;
   ClipperPaperBurn(
       {required this.pointCurves,
-      required this.delay,
       required this.pointCount,
       required this.animation})
       : super();
@@ -100,7 +106,7 @@ class ClipperPaperBurn extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var pts = pointCurves
-        .map((e) => e.transform(animation.value - delay) * size.height)
+        .map((e) => (e.transform(animation.value)) * size.height)
         .toList();
 
     Path path = Path();

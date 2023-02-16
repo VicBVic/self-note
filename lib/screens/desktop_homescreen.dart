@@ -28,8 +28,6 @@ class DesktopHomeScreen extends ConsumerStatefulWidget {
 class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
   BadgoodController badgoodController = BadgoodController();
 
-  bool isBad = true;
-
   Future<void> logOut() async {
     FirebaseAuth.instance.signOut();
   }
@@ -82,8 +80,11 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
           ),
         ],
       ),
-      body: PaperBadMenu(
-        badgoodController: badgoodController,
+      body: AnimatedSwitcher(
+        duration: Duration(seconds: 5),
+        child: badgoodController.isBad
+            ? PaperBadMenu(badgoodController: badgoodController)
+            : PaperGoodMenu(),
       ),
     );
   }

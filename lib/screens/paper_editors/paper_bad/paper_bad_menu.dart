@@ -61,20 +61,20 @@ class _PaperBadMenuState extends State<PaperBadMenu>
           fontWeight: FontWeight.bold,
           color: Colors.white,
         );
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
 
     return CustomScrollView(
         //shrinkWrap: true,
         controller: scrollController,
         slivers: <Widget>[
               SliverFillViewport(
-                delegate: SliverChildListDelegate(<Widget>[
-                  PaperbadUtility(
-                    animationController: animationController,
-                    scrollController: scrollController,
-                  ),
-                ]),
+                delegate: SliverChildListDelegate(
+                  [
+                    PaperbadUtility(
+                      animationController: animationController,
+                      scrollController: scrollController,
+                    ),
+                  ],
+                ),
               ),
             ] +
             desc);

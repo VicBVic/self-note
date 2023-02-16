@@ -34,6 +34,8 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile =
+        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     user = FirebaseAuth.instance.currentUser;
     var b1 = Theme.of(context).textTheme.displaySmall!.copyWith(
@@ -53,59 +55,62 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
     var notLoggedInAlert = NotLoggedInAlert();
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: widget.padding),
-          height: widget.paperHeight,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.asset(
-                'textures/my-papyrus.png',
-                fit: BoxFit.fill,
-              ),
-              Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextFormField(
-                      controller: widget.thing1,
-                      style: b1,
-                      decoration: dec,
-                    ),
-                    TextFormField(
-                      controller: widget.thing2,
-                      style: b1,
-                      decoration: dec,
-                    ),
-                    TextFormField(
-                      controller: widget.thing3,
-                      style: b1,
-                      decoration: dec,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'On a scale from 0-10, how happy did you truly feel today?',
-                        style: b2,
-                      ),
-                    ),
-                    Slider(
-                      onChanged: (double newVal) {
-                        setState(() {
-                          widget.happiness = newVal.toInt();
-                        });
-                      },
-                      value: widget.happiness.toDouble(),
-                      label: widget.happiness.toString(),
-                      max: 10,
-                      min: 0,
-                      divisions: 10,
-                    ),
-                  ],
+        Flexible(
+          child: Container(
+            padding: !isMobile
+                ? EdgeInsets.symmetric(horizontal: widget.padding)
+                : null,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.asset(
+                  'textures/dummy-no-royalty.jpg',
+                  fit: BoxFit.cover,
                 ),
-              ),
-            ],
+                Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextFormField(
+                        controller: widget.thing1,
+                        style: b1,
+                        decoration: dec,
+                      ),
+                      TextFormField(
+                        controller: widget.thing2,
+                        style: b1,
+                        decoration: dec,
+                      ),
+                      TextFormField(
+                        controller: widget.thing3,
+                        style: b1,
+                        decoration: dec,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'On a scale from 0-10, how happy did you truly feel today?',
+                          style: b2,
+                        ),
+                      ),
+                      Slider(
+                        onChanged: (double newVal) {
+                          setState(() {
+                            widget.happiness = newVal.toInt();
+                          });
+                        },
+                        value: widget.happiness.toDouble(),
+                        label: widget.happiness.toString(),
+                        max: 10,
+                        min: 0,
+                        divisions: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Padding(

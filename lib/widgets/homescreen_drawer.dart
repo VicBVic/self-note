@@ -13,17 +13,23 @@ class HomescreenDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
-                  },
-                  child: const Text('Sign up'),
+                Flexible(
+                  flex: 1,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                    child: Text('Sign up'),
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signin');
-                  },
-                  child: const Text('Sign in'),
+                Flexible(
+                  flex: 2,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signin');
+                    },
+                    child: Text('Sign in'),
+                  ),
                 ),
               ],
             )
