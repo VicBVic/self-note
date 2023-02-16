@@ -4,20 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:itec20222/consts.dart';
-import 'package:itec20222/screens/paper_editors/paper.dart';
+import 'package:itec20222/screens/paper_editors/burnable_paper.dart';
 import 'package:itec20222/classes/color_picker_button.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_interactable_rail.dart';
-import 'package:itec20222/screens/paper_editors/paper_bad/paperbad_paperstack.dart';
 import 'package:painter/painter.dart';
 
 import 'drawable_paperbad.dart';
 
 class PaperBadInteractable extends StatefulWidget {
-  final double? paperHeight;
   final AnimationController animationController;
   PaperBadInteractable({
     Key? key,
-    this.paperHeight = 750,
     required this.forMobile,
     required this.animationController,
   }) : super(key: key);
@@ -45,22 +42,25 @@ class _PaperBadInteractableState extends State<PaperBadInteractable> {
     {
       return Container(
         padding: const EdgeInsets.all(20),
-        height: widget.paperHeight,
         child: Row(
           children: [
-            DrawablePaperBad(
-              paintsWithBrush: (paintsWithBrush == 1),
-              widget: widget,
-              controller: _controller,
-              forMobile: widget.forMobile,
-              animationController: widget.animationController,
+            Flexible(
+              child: DrawablePaperBad(
+                paintsWithBrush: (paintsWithBrush == 1),
+                controller: _controller,
+                forMobile: widget.forMobile,
+                animationController: widget.animationController,
+              ),
             ),
-            PaperbadInteractableRail(
-                onDestinationSelected: (index) => setState(() {
-                      paintsWithBrush = index;
-                    }),
-                selectedIndex: paintsWithBrush,
-                controller: _controller)
+            Align(
+              alignment: Alignment.centerRight,
+              child: PaperbadInteractableRail(
+                  onDestinationSelected: (index) => setState(() {
+                        paintsWithBrush = index;
+                      }),
+                  selectedIndex: paintsWithBrush,
+                  controller: _controller),
+            )
           ],
         ),
       );

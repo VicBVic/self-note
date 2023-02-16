@@ -42,7 +42,9 @@ class MyApp extends StatelessWidget {
         options: DefaultFirebaseOptions.currentPlatform,
       ),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.error == null) {
+          print("good to go");
           return MaterialApp(
             initialRoute: '/home',
             routes: {
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.dark,
           );
         }
-        return const MaterialApp();
+        return Container();
       },
     );
   }

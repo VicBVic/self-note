@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/auth/signin.dart';
@@ -8,7 +9,6 @@ import 'package:itec20222/robertstore.dart';
 import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad_menu.dart';
 import 'package:itec20222/screens/paper_editors/paper_good/paper_good_menu.dart';
 import 'package:itec20222/widgets/badgood_controller.dart';
-//import 'package:itec20222/widgets/cookies.dart';
 import 'package:itec20222/widgets/homescreen_drawer.dart';
 
 //var user = FirebaseAuth.instance.currentUser;
@@ -28,8 +28,6 @@ class DesktopHomeScreen extends ConsumerStatefulWidget {
 class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
   BadgoodController badgoodController = BadgoodController();
 
-  bool isBad = true;
-
   Future<void> logOut() async {
     FirebaseAuth.instance.signOut();
   }
@@ -40,8 +38,9 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
       setState(() {});
     });
     super.initState();
+    // print("yeah here ${userProvider.notifier}");
     FirebaseAuth.instance.authStateChanges().listen((event) {
-      ref.read(userProvider.notifier).state = event;
+      ref.read(userProvider.notifier);
     });
   }
 
@@ -81,15 +80,11 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
           ),
         ],
       ),
-      body: AnimatedCrossFade(
-        duration: const Duration(seconds: 1),
-        firstChild: PaperGood(),
-        secondChild: PaperBadMenu(
-          badgoodController: badgoodController,
-        ),
-        crossFadeState: badgoodController.isBad
-            ? CrossFadeState.showSecond
-            : CrossFadeState.showFirst,
+      body: AnimatedSwitcher(
+        duration: Duration(seconds: 5),
+        child: badgoodController.isBad
+            ? PaperBadMenu(badgoodController: badgoodController)
+            : PaperGoodMenu(),
       ),
     );
   }
