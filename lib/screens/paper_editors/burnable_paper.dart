@@ -23,6 +23,7 @@ class BurnablePaper extends StatefulWidget {
 
 class _BurnablePaperState extends State<BurnablePaper> {
   late List<Curve> pointCurves;
+  double op = 0;
 
   @override
   void initState() {
@@ -32,6 +33,9 @@ class _BurnablePaperState extends State<BurnablePaper> {
       () => setState(() {}),
     );
     //print(widget.burning);
+    Future.delayed(Duration(milliseconds: 500)).then((value) => setState(() {
+          op = 1;
+        }));
     super.initState();
   }
 
@@ -42,20 +46,41 @@ class _BurnablePaperState extends State<BurnablePaper> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        ClipPath(
-          clipper: ClipperPaperBurn(pointCurves,
-              animation: CurvedAnimation(
-                  parent: widget.animationController, curve: Curves.easeIn),
-              pointCount: BurnablePaper.pointCount),
-          child: Image.asset(
-            'assets/textures/dummy-no-royalty.jpg',
+    return AnimatedOpacity(
+      duration: Duration(seconds: 3),
+      opacity: op,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ClipPath(
+            clipper: ClipperPaperBurn(
+                delay: 0.1,
+                pointCurves: pointCurves,
+                animation: CurvedAnimation(
+                    parent: widget.animationController, curve: Curves.easeIn),
+                pointCount: BurnablePaper.pointCount),
+            child: Container(
+              color: Colors.orange,
+            ),
+          ),
+          ClipPath(
+            clipper: ClipperPaperBurn(
+                delay: 0,
+                pointCurves: pointCurves,
+                animation: CurvedAnimation(
+                    parent: widget.animationController, curve: Curves.easeIn),
+                pointCount: BurnablePaper.pointCount),
+            child: Image.asset(
+              'assets/textures/dummy-no-royalty.jpg',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Image.asset(
+            'assets/textures/paper_border.png',
             fit: BoxFit.cover,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -63,15 +88,19 @@ class _BurnablePaperState extends State<BurnablePaper> {
 class ClipperPaperBurn extends CustomClipper<Path> {
   final Animation animation;
   final int pointCount;
+  final double delay;
   final List<Curve> pointCurves;
-  ClipperPaperBurn(this.pointCurves,
-      {required this.pointCount, required this.animation})
+  ClipperPaperBurn(
+      {required this.pointCurves,
+      required this.delay,
+      required this.pointCount,
+      required this.animation})
       : super();
 
   @override
   Path getClip(Size size) {
     var pts = pointCurves
-        .map((e) => e.transform(animation.value) * size.height)
+        .map((e) => e.transform(animation.value - delay) * size.height)
         .toList();
 
     Path path = Path();
