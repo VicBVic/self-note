@@ -47,13 +47,19 @@ class _PaperGoodMenuState extends State<PaperGoodMenu> {
 
   void loadDesc() async {
     //print("yep");
-    int count = 0;
-    await rootBundle.loadString('pagebad.json').then((value) {
+    await rootBundle.loadString('jsons/pagebad.json').then((value) {
+      TextStyle h1 = Theme.of(context).textTheme.headline2!.copyWith(
+          decoration: TextDecoration.underline,
+          fontWeight: FontWeight.bold,
+          color: Colors.white);
+      TextStyle h2 = Theme.of(context).textTheme.headline2!;
+      TextStyle b1 = Theme.of(context).textTheme.bodyLarge!
+        ..copyWith(fontSize: 22.0, height: 1.5);
+
       setState(() {
         var serialized = jsonDecode(value);
         for (var paragraph in serialized) {
           var argb = paragraph['Color'];
-          count++;
           desc.add(ParallaxSliver(
             child: AnimatedWavyContainer(
               color: Color.fromARGB(argb[0], argb[1], argb[2], argb[3]),
