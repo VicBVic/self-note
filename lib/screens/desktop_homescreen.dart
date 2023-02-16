@@ -34,6 +34,14 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
     FirebaseAuth.instance.signOut();
   }
 
+  void firebaseListener(event) async {
+    currentlyLoggedUser = event;
+    if (currentlyLoggedUser != null)
+      username = await Robertstore.instance.getName(currentlyLoggedUser!.uid);
+    setState(() {});
+    print("here");
+  }
+
   @override
   void initState() {
     badgoodController.addListener(() {
@@ -41,14 +49,16 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
     });
     super.initState();
     // print("yeah here ${userProvider.notifier}");
-    FirebaseAuth.instance.authStateChanges().listen((event) async {
-      //ref.read(userProvider);
-      currentlyLoggedUser = event;
-      if (currentlyLoggedUser != null)
-        username = await Robertstore.instance.getName(currentlyLoggedUser!.uid);
-      setState(() {});
-      print("here");
-    });
+    FirebaseAuth.instance
+        .authStateChanges()
+        .asBroadcastStream()
+        .listen(firebaseListener);
+  }
+
+  @override
+  void dispose() {
+    //FirebaseAuth.instance.authStateChanges().asBroadcastStream(
+    super.dispose();
   }
 
   @override
@@ -69,19 +79,28 @@ class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
         logout: logOut,
       ),
       appBar: AppBar(
-        title: Text(
-          widget.title,
-          style:
-              Theme.of(context).textTheme.headline3!.copyWith(fontSize: 30.0),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                widget.title,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: 30.0),
+              ),
+            ),
+            Flexible(
+              child: Text(
+                currentlyLoggedUser == null
+                    ? 'You are not logged in'
+                    : 'You are logged in, ${username ?? "Missingno"}!',
+                style: b1,
+              ),
+            ),
+          ],
         ),
-        actions: [
-          Text(
-            currentlyLoggedUser == null
-                ? 'You are not logged in'
-                : 'You are logged in, ${username ?? "Missingno"}!',
-            style: b1,
-          ),
-        ],
       ),
       body: AnimatedSwitcher(
         duration: Duration(seconds: 5),

@@ -25,17 +25,16 @@ class _GoodMemosState extends State<GoodMemos> {
           builder: (BuildContext context,
               AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
             if (snapshot.hasData) loadCards(snapshot.data!);
-            return GridView.builder(
-              itemCount: s.length,
-              itemBuilder: (context, index) {
-                return MemoryCard(
-                  date: '2022',
-                  happiness: happlist[index],
-                  things: s[index],
-                );
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, childAspectRatio: 3),
+
+            return SingleChildScrollView(
+              child: Wrap(
+                  children: List.generate(
+                      s.length,
+                      (index) => MemoryCard(
+                            date: '2022',
+                            happiness: happlist[index],
+                            things: s[index],
+                          ))),
             );
           }),
     );
