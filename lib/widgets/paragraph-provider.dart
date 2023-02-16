@@ -82,11 +82,9 @@ class _ParagraphProviderState extends ConsumerState<ParagraphProvider> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
-                  child: FittedBox(
-                    child: Text(
-                      data['Content'],
-                      style: b1,
-                    ),
+                  child: Text(
+                    data['Content'],
+                    style: b1,
                   ),
                 ),
                 data['Type'] == "InfoLink"
