@@ -1,91 +1,69 @@
-import 'dart:async';
+import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:itec20222/screens/good_memories.dart';
-import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad.dart';
-import 'package:itec20222/screens/paper_editors/paper_good/paper_good.dart';
-import 'package:itec20222/widgets/wavy_container.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:itec20222/auth/signin.dart';
+import 'package:itec20222/robertstore.dart';
+import 'package:itec20222/screens/paper_editors/paper_bad/paper_bad_menu.dart';
+import 'package:itec20222/screens/paper_editors/paper_good/paper_good_menu.dart';
+import 'package:itec20222/widgets/badgood_controller.dart';
+import 'package:itec20222/widgets/homescreen_drawer.dart';
 
 //var user = FirebaseAuth.instance.currentUser;
 
-class DesktopHomeScreen extends StatefulWidget {
+final StateProvider<User?> userProvider = StateProvider((ref) => null);
+final StateProvider<String?> nameProvider = StateProvider((ref) => null);
+
+class DesktopHomeScreen extends ConsumerStatefulWidget {
   String title;
   DesktopHomeScreen({required this.title, Key? key}) : super(key: key);
 
   @override
-  State<DesktopHomeScreen> createState() => _DesktopHomeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DesktopHomeScreenState();
 }
 
-class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
-  //bool userIsLoggedIn = user != null;
-  bool isBad = true;
+class _DesktopHomeScreenState extends ConsumerState<DesktopHomeScreen> {
+  BadgoodController badgoodController = BadgoodController();
 
-  void autoLogIn() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? userId = prefs.getString('username');
-
-    if (userId != null && userId != '') {
-      setState(() {
-        // isLoggedIn = true;
-        // name = userId;
-      });
-      return;
-    }
-  }
-
-  void logOut() async {
+  Future<void> logOut() async {
     FirebaseAuth.instance.signOut();
-    setState(() {});
   }
 
   @override
   void initState() {
-    autoLogIn();
+    badgoodController.addListener(() {
+      setState(() {});
+    });
     super.initState();
+    // print("yeah here ${userProvider.notifier}");
+    FirebaseAuth.instance.authStateChanges().listen((event) {
+      ref.read(userProvider.notifier);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    User? currentlyLoggedUser = ref.watch(userProvider);
+
+    ref.listen<User?>(userProvider, (previous, next) async {
+      if (next != null) {
+        ref.read(nameProvider.notifier).state =
+            await Robertstore.instance.getName(next.uid);
+      } else {
+        ref.read(nameProvider.notifier).state = null;
+      }
+    });
+
     TextStyle b1 =
         Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 22.0);
-    var user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
-      drawer: Drawer(
-        child: (user == null)
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
-                    },
-                    child: Text('Sign up'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/signin');
-                    },
-                    child: Text('Sign in'),
-                  ),
-                ],
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton(
-                    child: Text('Memories'),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/memories');
-                    },
-                  ),
-                  TextButton(onPressed: logOut, child: Text('Sign out')),
-                ],
-              ),
+      drawer: HomescreenDrawer(
+        user: currentlyLoggedUser,
+        logout: logOut,
       ),
       appBar: AppBar(
         title: Text(
@@ -95,27 +73,18 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
         ),
         actions: [
           Text(
-            user == null ? 'You are not logged in' : 'You are logged in',
+            currentlyLoggedUser == null
+                ? 'You are not logged in'
+                : 'You are logged in${ref.watch(nameProvider) != null ? ", ${ref.watch(nameProvider)}" : ""}',
             style: b1,
           ),
         ],
       ),
-      body: ListView(
-        children: [
-          AnimatedCrossFade(
-            duration: const Duration(seconds: 5),
-            firstChild: PaperGood(),
-            secondChild: PaperBad(
-              onBurned: () {
-                setState(() {
-                  isBad = false;
-                });
-              },
-            ),
-            crossFadeState:
-                isBad ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-          ),
-        ],
+      body: AnimatedSwitcher(
+        duration: Duration(seconds: 5),
+        child: badgoodController.isBad
+            ? PaperBadMenu(badgoodController: badgoodController)
+            : PaperGoodMenu(),
       ),
     );
   }

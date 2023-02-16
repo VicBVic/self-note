@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:itec20222/main.dart';
 import 'package:itec20222/robertstore.dart';
-import 'package:itec20222/widgets/wavy_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ParagraphProvider extends StatefulWidget {
+final StateProvider<int> userCount = StateProvider((ref) => 0);
+final StateProvider<int> writes = StateProvider((ref) => 0);
+
+class ParagraphProvider extends ConsumerStatefulWidget {
   final Map? data;
   final double? waveHeight;
   final double? waveLength;
@@ -14,38 +17,44 @@ class ParagraphProvider extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ParagraphProvider> createState() => _ParagraphProviderState();
+  ConsumerState<ParagraphProvider> createState() => _ParagraphProviderState();
 }
 
-class _ParagraphProviderState extends State<ParagraphProvider> {
-  String users = "0";
+class _ParagraphProviderState extends ConsumerState<ParagraphProvider> {
+  void getCountData() async {
+    ref.read(userCount.notifier).state =
+        await Robertstore.instance.getUserCount();
+  }
 
-  void getData(int u) {
-    setState(() {
-      users = u.toString();
-    });
+  void getWrites() async {
+    ref.read(writes.notifier).state = await Robertstore.instance.getWrites();
   }
 
   @override
   void initState() {
     super.initState();
-    Robertstore().Get_user_count().then((value) => getData(value!));
+    getCountData();
+    getWrites();
   }
 
   @override
   Widget build(BuildContext context) {
-    const double defHeight = 50;
-    const double defLen = 350;
-    const double defSpeed = 1;
+    return decodeData(widget.data);
+  }
+
+  Widget decodeData(Map? data) {
+    bool isMobile =
+        MediaQuery.of(context).size.width < MediaQuery.of(context).size.height;
+    const double defHeight = 100;
     var data = widget.data;
     if (data == null) return Container();
     var argb = data['Color'];
     Color bcolor = Color.fromARGB(argb[0], argb[1], argb[2], argb[3]);
-    TextStyle h1 = Theme.of(context).textTheme.headline2!.copyWith(
+    TextStyle h1 = Theme.of(context).textTheme.displayMedium!.copyWith(
         decoration: TextDecoration.underline,
         fontWeight: FontWeight.bold,
         color: bcolor.computeLuminance() > 0.5 ? Colors.black : Colors.white);
-    TextStyle h2 = Theme.of(context).textTheme.headline2!;
+    TextStyle h2 = Theme.of(context).textTheme.displayMedium!;
     TextStyle b1 = Theme.of(context).textTheme.bodyLarge!.copyWith(
         fontSize: 22.0,
         color: bcolor.computeLuminance() > 0.5 ? Colors.black : Colors.white);
@@ -55,15 +64,8 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
       case "InfoLeft":
       case "InfoLink":
         {
-          return WavyContainer(
-            height: data['Height'],
-            width: double.infinity,
-            waveHeight: widget.waveHeight ?? defHeight,
-            waveLength: widget.waveLength ?? defLen,
-            waveSpeed: widget.waveSpeed ?? defSpeed,
-            color: Color.fromARGB(argb[0], argb[1], argb[2], argb[3]),
-            waveProcent: 1.0 +
-                (((widget.waveHeight ?? defHeight) + 8) / (data['Height'])),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: data['Type'] == "InfoRight"
                   ? CrossAxisAlignment.end
@@ -107,56 +109,53 @@ class _ParagraphProviderState extends State<ParagraphProvider> {
         }
       case "UserData":
         {
-          //return Text('Salut');
-          return WavyContainer(
-            height: data['Height'],
-            width: double.infinity,
-            waveHeight: widget.waveHeight ?? defHeight,
-            waveLength: widget.waveLength ?? defLen,
-            waveSpeed: widget.waveSpeed ?? defSpeed,
-            color: Color.fromARGB(argb[0], argb[1], argb[2], argb[3]),
-            waveProcent: 1.0 +
-                (((widget.waveHeight ?? defHeight) + 8) / (data['Height'])),
-            child: Row(
+          var children = [
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  64, (widget.waveHeight ?? defHeight) + 16, 64, 64),
+              child: Text(
+                data['Title'],
+                style: h1,
+              ),
+            ),
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      64, (widget.waveHeight ?? defHeight) + 16, 64, 64),
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
                   child: Text(
-                    data['Title'],
-                    style: h1,
+                    '${ref.watch(writes)} Users wrote their selfnotes today.',
+                    style: b1,
                   ),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
-                      child: Text(
-                        '285 Users wrote their selfnotes today.',
-                        style: b1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
-                      child: Text(
-                        'A total of $users people signed up for selfnote.',
-                        style: b1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
-                      child: Text(
-                        'The average of all happiness recorded globally was 2.33.',
-                        style: b1,
-                      ),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+                  child: Text(
+                    'A total of ${ref.watch(userCount)} people signed up for selfnote.',
+                    style: b1,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
+                  child: Text(
+                    'A total of {memoryCount} memories have been written.',
+                    style: b1,
+                  ),
                 ),
               ],
             ),
+          ];
+          //return Text('Salut');
+          return FittedBox(
+            child: isMobile
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: children)
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: children),
           );
         }
     }

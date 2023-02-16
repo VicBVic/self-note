@@ -66,7 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '180380880828',
     projectId: 'itec-b5aeb',
     storageBucket: 'itec-b5aeb.appspot.com',
-    iosClientId: '180380880828-924u1rkmt2mr6ms3m6bc8s1g3ajfs8vh.apps.googleusercontent.com',
+    iosClientId:
+        '180380880828-924u1rkmt2mr6ms3m6bc8s1g3ajfs8vh.apps.googleusercontent.com',
     iosBundleId: 'com.example.itec20222',
   );
 
@@ -76,7 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '180380880828',
     projectId: 'itec-b5aeb',
     storageBucket: 'itec-b5aeb.appspot.com',
-    iosClientId: '180380880828-924u1rkmt2mr6ms3m6bc8s1g3ajfs8vh.apps.googleusercontent.com',
+    iosClientId:
+        '180380880828-924u1rkmt2mr6ms3m6bc8s1g3ajfs8vh.apps.googleusercontent.com',
     iosBundleId: 'com.example.itec20222',
   );
 }
