@@ -82,13 +82,11 @@ class _PaperBadMenuState extends State<PaperBadMenu>
 
   void loadDesc() async {
     //print("yep");
-    int count = 0;
-    await rootBundle.loadString('pagebad.json').then((value) {
+    await rootBundle.loadString('jsons/pagebad.json').then((value) {
       setState(() {
         var serialized = jsonDecode(value);
         for (var paragraph in serialized) {
           var argb = paragraph['Color'];
-          count++;
           desc.add(ParallaxSliver(
             child: AnimatedWavyContainer(
               color: Color.fromARGB(argb[0], argb[1], argb[2], argb[3]),

@@ -52,7 +52,7 @@ class _PaperGoodInteractableState extends State<PaperGoodInteractable> {
       prefixIconColor: Colors.green,
       border: OutlineInputBorder(borderSide: BorderSide.none),
     );
-    var notLoggedInAlert = NotLoggedInAlert();
+    var notLoggedInAlert = const NotLoggedInAlert();
     return Column(
       children: [
         Flexible(

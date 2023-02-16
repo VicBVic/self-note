@@ -1,0 +1,73 @@
+[
+    {
+        "Title": "What is Selfnote?",
+        "Content": "This website is a note-taking form for writing down all negative thoughts that bothered or made you feel sad troughout the day. \nFeel free to express yourself in any way the note, such as writing a letter to somebody, listing your emotions or just doodling. \nWhen you are finished, don't reread what you wrote, this might bring back the bad feelings. Just press the burn button above to destroy the paper.",
+        "Color": [
+            255,
+            14,
+            14,
+            14
+        ],
+        "Height": 750,
+        "Type": "InfoLeft"
+    },
+    {
+        "Title": "Why should you use this website?",
+        "Content": "Often we hold our negative thoughts inside of ourselves. This technique, known as Purge Emotional Writing, aims to help you overcome your negativity by expressing yourself, and then symbollically buring those thoughts away.\nThe second technique featured by this website is called \"The Three Good Things\" excercise, or \"Three Blessings\", and its aim is to redirect attention towards positive thoughts and away from negative thoughts. This method was created in the 20th century by psychologist Martin Seligman, who is considered to be \"father of positive psychology\".",
+        "Color": [
+            255,
+            30,
+            30,
+            35
+        ],
+        "Height": 750.0,
+        "Type": "InfoRight"
+    },
+    {
+        "Title": "You are not alone.",
+        "Type": "UserData",
+        "Height": 550.0,
+        "Color": [
+            255,
+            70,
+            70,
+            105
+        ]
+    },
+    {
+        "Title": "Suicide and depression rates are dropping.",
+        "Type": "InfoLink",
+        "Height": 650.0,
+        "Content": "All around the world, people are helping other people overcome their sorrows and traumas. People are starting to speak up and take matters in their hand, as proven by the World Health Organisation in data ranging from 1990 to 2019.",
+        "Color": [
+            255,
+            100,
+            100,
+            125
+        ],
+        "Link": [
+            "https",
+            "ourworldindata.org",
+            "grapher/suicide-mortality-rate"
+        ],
+        "Button": "See the data"
+    },
+    {
+        "Title": "Help is always avalible.",
+        "Type": "InfoLink",
+        "Height": 650.0,
+        "Color": [
+            255,
+            200,
+            200,
+            225
+        ],
+        "Content": "If your're struggling with depression and/or sucididal thoughts, make sure to check out the links below. There is always hope.",
+        "Link": [
+            "https",
+            "findahelpline.com",
+            ""
+        ],
+        "Button": "List of Suicide/Counseling Hotlines - via FindAHelpline"
+    }
+]
